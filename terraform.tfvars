@@ -4,8 +4,6 @@ environment = "prod"
 
 availability_zone = "us-west-1b"
 
-aws_region = "us-west-1"
-
 source_ami_account_number = "308025194586"  # lucidum account
 
 lucidum_ami_version = "lucidum-customer-edition-latest"
@@ -26,6 +24,8 @@ boot_edition = "ubuntu"  # [ ubuntu, amznlinux2 ]
 
 
 # optional overrides
+
+aws_region = "us-west-1"
 
 aws_profile = "lucidum-secondary"
 

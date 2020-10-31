@@ -8,10 +8,6 @@ variable "availability_zone" {
   type = string
 }
 
-variable "aws_region" {
-  type = string
-}
-
 variable "source_ami_account_number" {
   type = string
 }
@@ -65,6 +61,11 @@ variable "backup_ebs_volume_id" {
   default = ""
 }
 
+variable "data_ebs_volume" {
+  type    = bool
+  default = false
+}
+
 variable "lucidum_ami_id" {
   type    = string
   default = ""
@@ -75,9 +76,9 @@ variable "aws_profile" {
   default = "default"
 }
 
-variable "data_ebs_volume" {
-  type    = bool
-  default = false
+variable "aws_region" {
+  type   = string
+  string = "us-east-1"
 }
 
  
