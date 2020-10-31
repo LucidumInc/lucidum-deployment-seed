@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  TrustAccount:
+    Type: String
+    Description: AWS account number to trust
+  TrustExternalId:
+    Type: String
+    Default: lucidum-access
+    Description: External ID to authenticate assume role
+  AssumeRoleName:
+    Type: String
+    Default: lucidum_assume_role
+    Description: Lucidum assume role name
+
+Outputs:
+  AssumeRoleArn:
+    Value: !GetAtt LucidumAssumeRole.Arn
+
+Resources:
+  LucidumAssumeRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref 'AssumeRoleName'
+      Description: !Ref 'AssumeRoleName'
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Ref 'TrustAccount'
+            Action:
+              - sts:AssumeRole
+            Condition:
+              StringEquals:
+                sts:ExternalId: !Ref 'TrustExternalId'
+
+      Policies:
+        - PolicyName: !Ref 'AssumeRoleName'
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Resource: "*"
+                Action:
+                  - cloudtrail:Describe*
+                  - cloudtrail:Get*
+                  - cloudtrail:List*
+                  - cloudtrail:LookupEvents
+                  - cloudwatch:Describe*
+                  - cloudwatch:Get*
+                  - cloudwatch:List*
+                  - config:Describe*
+                  - config:Get*
+                  - config:List*
+                  - dynamodb:Describe*
+                  - dynamodb:List*
+                  - dynamodb:Scan
+                  - ec2:Describe*
+                  - ec2:Get*
+                  - ecs:Describe*
+                  - ecs:List*
+                  - eks:Describe*
+                  - eks:List*
+                  - elasticloadbalancing:Describe*
+                  - guardduty:Get*
+                  - guardduty:List*
+                  - iam:Get*
+                  - iam:List*
+                  - inspector:Describe*
+                  - inspector:Get*
+                  - inspector:List*
+                  - kms:Describe*
+                  - kms:Get*
+                  - kms:List*
+                  - lambda:Get*
+                  - lambda:List*
+                  - pricing:Describe*
+                  - pricing:Get*
+                  - route53:List*
+                  - s3:Get*
+                  - s3:List*
+                  - securityhub:Describe*
+                  - securityhub:Get*
+                  - securityhub:List*
+                  - ssm:Get*
+                  - sts:Get*
+                  - tag:Get*
