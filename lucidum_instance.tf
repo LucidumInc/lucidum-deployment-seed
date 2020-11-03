@@ -4,12 +4,20 @@ provider "aws" {
 }
 
 
+locals {
+  secgroup_id  = var.security_group_id != "" ? var.security_group_id : aws_security_group.lucidum[0].id
+  profile_name = var.instance_profile_name != "" ? var.instance_profile_name : aws_iam_instance_profile.lucidum[0].name
+  lucidum_prefix = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}"
+  lucidum_env = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}-${var.environment}"
+}
+
+
 data "aws_ami" "lucidum_ami" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = [ "${var.lucidum_ami_version}*" ]
+    values = [ "${local.lucidum_prefix}*" ]
   }
 
   filter {
@@ -23,8 +31,8 @@ data "aws_ami" "lucidum_ami" {
 
 resource "aws_security_group" "lucidum" {
   count       = var.security_group_id == "" ? 1 : 0
-  name        = "${var.lucidum_ami_version}-${var.environment}"
-  description = "${var.lucidum_ami_version}-${var.environment}"
+  name        = local.lucidum_env
+  description = local.lucidum_env
   vpc_id      = var.vpc_id
 
   ingress {
@@ -83,15 +91,10 @@ resource "aws_security_group" "lucidum" {
   }
 
   tags = {
-    Name = "${var.lucidum_ami_version}-${var.environment}"
+    Name = local.lucidum_env
   }
 }
 
-
-locals {
-  secgroup_id  = var.security_group_id != "" ? var.security_group_id : aws_security_group.lucidum[0].id
-  profile_name = var.instance_profile_name != "" ? var.instance_profile_name : aws_iam_instance_profile.lucidum[0].name
-}
 
 resource "aws_instance" "lucidum" {
   ami                         = var.lucidum_ami_id == "" ? data.aws_ami.lucidum_ami.id : var.lucidum_ami_id
@@ -102,14 +105,14 @@ resource "aws_instance" "lucidum" {
   vpc_security_group_ids      = [ local.secgroup_id ]
   iam_instance_profile        = local.profile_name
   availability_zone           = var.availability_zone
-  user_data                   = file("boot_${var.boot_edition}.sh")
+  user_data                   = file("boot_${var.playbook_edition}.sh")
 
   root_block_device {
     volume_size = 50
   }
 
   tags = {
-    Name = "${var.lucidum_ami_version}-${var.environment}"
+    Name = local.lucidum_env
   }
 }
 
@@ -132,22 +135,22 @@ resource "aws_ebs_volume" "lucidum_data" {
   size              = 50
   availability_zone = var.availability_zone
   tags = {
-    Name = "${var.lucidum_ami_version}-${var.environment}_data"
+    Name = "${local.lucidum_env}_data"
   }
 }
 
 resource "aws_iam_instance_profile" "lucidum" {
   count = var.instance_profile_name == "" ? 1 : 0
-  name  = "${var.lucidum_ami_version}-${var.environment}"
+  name  = local.lucidum_env
   role  = aws_iam_role.lucidum[0].name
 }
 
 resource "aws_iam_role" "lucidum" {
   count              = var.instance_profile_name == "" ? 1 : 0
-  name               = "${var.lucidum_ami_version}-${var.environment}"
+  name               = local.lucidum_env
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.lucidum_assume_role.json
-  tags               = { Name = "${var.lucidum_ami_version}-${var.environment}" }
+  tags               = { Name = local.lucidum_env }
 }
 
 data "aws_iam_policy_document" "lucidum_assume_role" {
@@ -162,7 +165,7 @@ data "aws_iam_policy_document" "lucidum_assume_role" {
 
 resource "aws_iam_role_policy" "lucidum" {
   count  = var.instance_profile_name == "" ? 1 : 0
-  name   = "${var.lucidum_ami_version}-${var.environment}"
+  name   = local.lucidum_env
   role   = aws_iam_role.lucidum[0].name
   policy = data.aws_iam_policy_document.lucidum_access_policy.json
 }
@@ -260,12 +263,12 @@ data "aws_iam_policy_document" "lucidum_assume_role_trust" {
 }
 
 resource "aws_iam_role" "lucidum_assume_role" {
-  name               = "${var.stack_name}_${var.environment}_assume_role"
+  name               = "${local.lucidum_env}_assume_role"
   assume_role_policy = data.aws_iam_policy_document.lucidum_assume_role_trust.json
 }
 
 resource "aws_iam_role_policy" "lucidum_assume_role_trust" {
-  name   = "${var.stack_name}_${var.environment}_assume_role_policy"
+  name   = "${local.lucidum_env}_assume_role_policy"
   role   = aws_iam_role.lucidum_assume_role.name
   policy = data.aws_iam_policy_document.lucidum_access_policy.json
 }

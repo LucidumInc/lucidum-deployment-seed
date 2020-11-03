@@ -12,10 +12,6 @@ variable "source_ami_account_number" {
   type = string
 }
 
-variable "lucidum_ami_version" {
-  type = string
-}
-
 variable "instance_size" {
   type = string
 }
@@ -40,9 +36,14 @@ variable "trusted_cidrs" {
   type = list
 }
 
-variable "boot_edition" {
-  type    = string
+variable "playbook_version" {
+  type = string
 }
+
+variable "playbook_edition" {
+  type = string
+}
+
 
 # optional overrides
 
@@ -77,8 +78,8 @@ variable "aws_profile" {
 }
 
 variable "aws_region" {
-  type   = string
-  string = "us-east-1"
+  type    = string
+  default = "us-east-1"
 }
 
  

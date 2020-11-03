@@ -11,7 +11,7 @@ export AWS_DEFAULT_REGION=us-west-1
 LUCIDUM_S3_BUCKET=lucidum-repository
 
 
-echo prepare root venv and awscli
+echo prepare root venv and awscli for ubuntu18
 apt update -y
 apt install python3-venv -y
 python3 -m venv /root/lucidum_venv
@@ -37,7 +37,7 @@ aws s3 cp s3://${LUCIDUM_S3_BUCKET}/${CUSTOMER_NAME}/boot_ubuntu.sh.asc \
 
 
 echo decrypt install_lucidum.sh.asc cyphertext
-rm -f /root/lucidum_venv
+rm -fr /root/lucidum_venv
 rm -fv /root/install_lucidum.sh
 gpg --decrypt /root/install_lucidum.sh.asc > /root/install_lucidum.sh
 rm -fv /root/install_lucidum.sh.asc

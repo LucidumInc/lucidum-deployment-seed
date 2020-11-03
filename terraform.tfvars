@@ -6,7 +6,9 @@ availability_zone = "us-west-1b"
 
 source_ami_account_number = "308025194586"  # lucidum account
 
-lucidum_ami_version = "lucidum-customer-edition-latest"
+playbook_version = "latest"
+
+playbook_edition = "ubuntu18"
 
 instance_size = "t3.large"
 
@@ -19,8 +21,6 @@ vpc_id = "vpc-9c2ce8fa"
 key_name = "lucidum-secondary"
 
 trusted_cidrs = [ "10.0.0.0/24", "192.168.0.0/16", "172.16.0.0/12" ]
-
-boot_edition = "ubuntu"  # [ ubuntu, amznlinux2 ]
 
 
 # optional overrides
