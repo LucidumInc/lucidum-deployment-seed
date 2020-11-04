@@ -37,7 +37,6 @@ aws s3 cp s3://${LUCIDUM_S3_BUCKET}/${CUSTOMER_NAME}/boot_init.sh.asc \
 
 
 echo decrypt install_lucidum.sh.asc cyphertext
-rm -fr /root/lucidum_venv
 rm -fv /root/install_lucidum.sh
 gpg --decrypt /root/install_lucidum.sh.asc > /root/install_lucidum.sh
 rm -fv /root/install_lucidum.sh.asc
@@ -46,6 +45,7 @@ rm -fv /root/install_lucidum.sh.asc
 echo run install_lucidum.sh
 bash -ex /root/install_lucidum.sh
 rm -fv /root/install_lucidum.sh
+rm -fr /root/lucidum_venv
 
 
 echo initialization complete
