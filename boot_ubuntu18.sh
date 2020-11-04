@@ -32,7 +32,7 @@ rm -fv gpg_private.key
 
 echo download install_lucidum.sh.asc cyphertext
 rm -fv /root/install_lucidum.sh.asc
-aws s3 cp s3://${LUCIDUM_S3_BUCKET}/${CUSTOMER_NAME}/boot_ubuntu.sh.asc \
+aws s3 cp s3://${LUCIDUM_S3_BUCKET}/${CUSTOMER_NAME}/boot_init.sh.asc \
   /root/install_lucidum.sh.asc
 
 
