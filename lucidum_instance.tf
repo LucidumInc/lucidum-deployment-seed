@@ -216,7 +216,7 @@ data "aws_iam_policy_document" "lucidum_access_policy" {
                 "securityhub:Get*",
                 "securityhub:List*",
                 "ssm:Get*",
-                "sts:Get*",
+                "sts:AssumeRole",
                 "tag:Get*",
     ]
   }
@@ -239,42 +239,6 @@ data "aws_iam_policy_document" "lucidum_access_policy" {
                 "ecr:DescribeImageScanFindings",
     ]
   }
-}
-
-data "aws_caller_identity" "current" {}
-
-data "aws_iam_policy_document" "lucidum_assume_role_trust" {
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "AWS"
-      identifiers = [ data.aws_caller_identity.current.account_id ]
-    }
-
-    condition {
-      test     = "StringEquals"
-      variable = "sts:ExternalId"
-      values = [ var.trust_external_id ]
-    }
-
-    actions = ["sts:AssumeRole"]
-  }
-}
-
-resource "aws_iam_role" "lucidum_assume_role" {
-  name               = "${local.lucidum_env}_assume_role"
-  assume_role_policy = data.aws_iam_policy_document.lucidum_assume_role_trust.json
-}
-
-resource "aws_iam_role_policy" "lucidum_assume_role_trust" {
-  name   = "${local.lucidum_env}_assume_role_policy"
-  role   = aws_iam_role.lucidum_assume_role.name
-  policy = data.aws_iam_policy_document.lucidum_access_policy.json
-}
-
-output "role_arn" {
-  value = aws_iam_role.lucidum_assume_role.arn
 }
 
 output "lucidum_instance_private_ip" {
