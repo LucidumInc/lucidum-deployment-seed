@@ -5,7 +5,6 @@ variable "stack_name" {
 
 variable "trust_account" {
   type    = string
-  default = "906036546615"
 }
 
 variable "trust_external_id" {
