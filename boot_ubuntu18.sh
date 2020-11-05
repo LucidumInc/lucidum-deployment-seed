@@ -46,6 +46,7 @@ echo run install_lucidum.sh
 bash -ex /root/install_lucidum.sh
 rm -fv /root/install_lucidum.sh
 rm -fr /root/lucidum_venv
+touch /root/.lucidum_installed
 
 
 echo initialization complete

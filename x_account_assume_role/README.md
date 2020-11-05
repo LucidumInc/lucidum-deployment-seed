@@ -2,20 +2,31 @@
 
 .
 
-### execute on cli
-`terraform apply -var aws_profile=[$aws_child_account] -var trust_account=[$aws_main_account]`
+## terraform
 
+.
+
+### execute on cli
+`terraform apply -var aws_region=${AWS_REGION} aws_profile=${AWS_CHILD_ACCOUNT} -var trust_account=${AWS_MAIN_ACCOUNT}`
 
 .
 
 ### use config file
 edit `terraform.tfvars` to set variables and `terraform apply`
 
+.
 
 .
 
+## cloudformation
+
+### set vars and execute
+edit `clouformation.sh` to set variables and `bash cloudformation.sh`
 
 .
+
+.
+
 # assume role architecture diagram
 
 
