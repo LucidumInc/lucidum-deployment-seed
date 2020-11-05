@@ -22,8 +22,9 @@ data "aws_iam_policy_document" "lucidum_assume_role_trust" {
 }
 
 resource "aws_iam_role" "lucidum_assume_role" {
-  name               = var.stack_name
-  assume_role_policy = data.aws_iam_policy_document.lucidum_assume_role_trust.json
+  name                 = var.stack_name
+  assume_role_policy   = data.aws_iam_policy_document.lucidum_assume_role_trust.json
+  max_session_duration = 14400
 }
 
 resource "aws_iam_role_policy" "lucidum_assume_role_trust" {
