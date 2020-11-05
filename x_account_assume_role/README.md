@@ -2,7 +2,7 @@
 
 .
 
-### execute on cli or in loop
+### execute on cli
 `terraform apply -var aws_profile=[$aws_child_account] -var trust_account=[$aws_main_account]`
 
 

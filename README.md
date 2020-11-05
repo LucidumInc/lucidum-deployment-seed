@@ -10,6 +10,8 @@
 
 ### AWS cross account assume role
 
+`x_account_assume_role` directory for child account stack execution
+
 - main-account supports assume role by default and requires no additional action.
   * main-account terraform assume role resources created automatically as part of main stack.
   * main-account trusts itself and is treated like sub-accounts.
