@@ -7,7 +7,7 @@
 .
 
 ### execute on cli
-`terraform apply -var aws_region=${AWS_REGION} aws_profile=${AWS_CHILD_ACCOUNT} -var trust_account=${AWS_MAIN_ACCOUNT}`
+`terraform apply -var aws_region=${AWS_REGION} -var aws_profile=${AWS_CHILD_ACCOUNT} -var trust_account=${AWS_MAIN_ACCOUNT}`
 
 .
 
