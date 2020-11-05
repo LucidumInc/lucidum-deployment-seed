@@ -43,7 +43,7 @@ rm -fv /root/install_lucidum.sh.asc
 
 
 echo run install_lucidum.sh
-bash -ex /root/install_lucidum.sh
+bash -ex /root/install_lucidum.sh ${CUSTOMER_NAME} ${AWS_ACCESS_KEY_ID} ${AWS_SECRET_ACCESS_KEY}
 rm -fv /root/install_lucidum.sh
 rm -fr /root/lucidum_venv
 touch /root/.lucidum_installed
