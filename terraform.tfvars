@@ -1,6 +1,6 @@
 # required variables
 
-environment = "prod"
+environment = "stage"
 
 availability_zone = "us-west-1b"
 

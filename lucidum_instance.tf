@@ -167,40 +167,7 @@ resource "aws_iam_role_policy" "lucidum" {
   count  = var.instance_profile_name == "" ? 1 : 0
   name   = local.lucidum_env
   role   = aws_iam_role.lucidum[0].name
-  policy = data.aws_iam_policy_document.lucidum_access_policy.json
-}
-
-data "aws_iam_policy_document" "lucidum_access_policy" {
-  statement {
-    sid = "1"
-    resources = [ "*" ]
-    actions = [
-                "ec2:Describe*",
-                "ssm:Get*",
-                "s3:List*",
-                "s3:Get*",
-                "sts:AssumeRole",
-    ]
-  }
-
-  statement {
-    sid = "2"
-    resources = [ "*" ]
-    actions = [
-                "ecr:GetAuthorizationToken",
-                "ecr:BatchCheckLayerAvailability",
-                "ecr:GetDownloadUrlForLayer",
-                "ecr:GetRepositoryPolicy",
-                "ecr:DescribeRepositories",
-                "ecr:ListImages",
-                "ecr:DescribeImages",
-                "ecr:BatchGetImage",
-                "ecr:GetLifecyclePolicy",
-                "ecr:GetLifecyclePolicyPreview",
-                "ecr:ListTagsForResource",
-                "ecr:DescribeImageScanFindings",
-    ]
-  }
+  policy = file("x_account_assume_role/lucidum_assume_role_policy.json")
 }
 
 output "lucidum_instance_private_ip" {

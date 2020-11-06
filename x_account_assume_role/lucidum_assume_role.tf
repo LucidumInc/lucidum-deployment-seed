@@ -30,59 +30,7 @@ resource "aws_iam_role" "lucidum_assume_role" {
 resource "aws_iam_role_policy" "lucidum_assume_role_trust" {
   name   = var.stack_name
   role   = aws_iam_role.lucidum_assume_role.name
-  policy = data.aws_iam_policy_document.lucidum_assume_role_policy.json
-}
-
-data "aws_iam_policy_document" "lucidum_assume_role_policy" {
-  statement {
-    sid = "1"
-    resources = [ "*" ]
-    actions = [
-                "cloudtrail:Describe*",
-                "cloudtrail:Get*",
-                "cloudtrail:List*",
-                "cloudtrail:LookupEvents",
-                "cloudwatch:Describe*",
-                "cloudwatch:Get*",
-                "cloudwatch:List*",
-                "config:Describe*",
-                "config:Get*",
-                "config:List*",
-                "dynamodb:Describe*",
-                "dynamodb:List*",
-                "dynamodb:Scan",
-                "ec2:Describe*",
-                "ec2:Get*",
-                "ecs:Describe*",
-                "ecs:List*",
-                "eks:Describe*",
-                "eks:List*",
-                "elasticloadbalancing:Describe*",
-                "guardduty:Get*",
-                "guardduty:List*",
-                "iam:Get*",
-                "iam:List*",
-                "inspector:Describe*",
-                "inspector:Get*",
-                "inspector:List*",
-                "kms:Describe*",
-                "kms:Get*",
-                "kms:List*",
-                "lambda:Get*",
-                "lambda:List*",
-                "pricing:Describe*",
-                "pricing:Get*",
-                "route53:List*",
-                "s3:Get*",
-                "s3:List*",
-                "securityhub:Describe*",
-                "securityhub:Get*",
-                "securityhub:List*",
-                "ssm:Get*",
-                "sts:Get*",
-                "tag:Get*",
-    ]
-  }
+  policy = file("lucidum_assume_role_policy.json")
 }
 
 output "lucidum_role_arn" {
