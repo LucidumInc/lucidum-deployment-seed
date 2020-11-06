@@ -39,12 +39,15 @@ aws s3 cp s3://${LUCIDUM_S3_BUCKET}/${CUSTOMER_NAME}/boot_init.sh.asc \
 echo decrypt install_lucidum.sh.asc cyphertext
 rm -fv /root/install_lucidum.sh
 gpg --decrypt /root/install_lucidum.sh.asc > /root/install_lucidum.sh
-gpg -v --batch --yes --delete-secret-and-public-keys "$(gpg --fingerprint ${CUSTOMER_NAME}@lucidum.io | head -2 | tail -1)"
+gpg -v --batch --yes --delete-secret-and-public-keys \
+  "$(gpg --fingerprint ${CUSTOMER_NAME}@lucidum.io | head -2 | tail -1)"
 rm -fv /root/install_lucidum.sh.asc
 
 
 echo run install_lucidum.sh
-bash -ex /root/install_lucidum.sh ${CUSTOMER_NAME} ${AWS_ACCESS_KEY_ID} ${AWS_SECRET_ACCESS_KEY}
+bash -ex /root/install_lucidum.sh ${CUSTOMER_NAME} \
+                                  ${AWS_ACCESS_KEY_ID} \
+                                  ${AWS_SECRET_ACCESS_KEY}
 rm -fv /root/install_lucidum.sh
 rm -fr /root/lucidum_venv
 touch /root/.lucidum_installed
