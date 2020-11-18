@@ -28,7 +28,7 @@ aws ssm get-parameter --name /${CUSTOMER_NAME}/gpg.key \
                       --query Parameter.Value \
                       --output text \
                       --with-decryption > gpg_private.key
-gpg --import gpg_private.key
+gpg --import gpg_private.key || true
 rm -fv gpg_private.key
 
 
