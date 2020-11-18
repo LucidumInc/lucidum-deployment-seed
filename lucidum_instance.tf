@@ -108,7 +108,7 @@ resource "aws_instance" "lucidum" {
   user_data                   = file("boot_${var.playbook_edition}.sh")
 
   root_block_device {
-    volume_size = 50
+    volume_size = 1000
   }
 
   tags = {
