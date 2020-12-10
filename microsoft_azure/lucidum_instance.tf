@@ -14,7 +14,7 @@ data "http" "local_public_ip" {
 
 locals {
   local_public_ip = jsondecode(data.http.local_public_ip.body)
-  stack_name_stripped = replace(var.stack_name, "_", "")
+  stack_name_stripped = replace(var.stack_name, "_", "0")
 }
 
 
@@ -74,7 +74,7 @@ resource "azurerm_linux_virtual_machine" "lucidum_deploy" {
   size                  = var.instance_size
   admin_username        = var.instance_user
   network_interface_ids = [ azurerm_network_interface.lucidum_deploy.id ]
-  custom_data           = base64encode("run lucidum ansible playbook")
+  custom_data           = base64encode(file("boot_azure.sh"))
 
   admin_ssh_key {
     username = var.instance_user
