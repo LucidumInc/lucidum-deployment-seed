@@ -106,16 +106,14 @@ resource "azurerm_network_security_group" "lucidum_deploy" {
     priority                   = 100
     protocol                   = "Tcp"
     source_port_range          = "*"
-    source_address_prefix      = "*"
-    #source_address_prefix      = local.local_public_ip.ip
+    source_address_prefix      = local.local_public_ip.ip
     destination_port_range     = "22"
     destination_address_prefix = "*"
-    #destination_address_prefix = azurerm_public_ip.lucidum_deploy.ip_address
   }
 }
 
 
-resource "azurerm_network_interface_security_group_association" "lucidum_deployn" {
+resource "azurerm_network_interface_security_group_association" "lucidum_deploy" {
   network_interface_id      = azurerm_network_interface.lucidum_deploy.id
   network_security_group_id = azurerm_network_security_group.lucidum_deploy.id
 }
