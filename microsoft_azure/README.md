@@ -1,14 +1,16 @@
 To bring up the Lucidum stack on Microsoft Azure:
 
-  1. log into Azure CLI
+  0. log into Azure CLI
 
-  2. execute deployment: `terraform init` and `terraform apply`
+  1. replace `azure.pub` with authorized public key for use by vm
 
-  3. connect to instance: `ssh -i /path/to/key ubuntu@{{ public_ip }}`
+  2. execute deployment `terraform init` and `terraform apply`
 
-  4. update secrets in install script: `/var/lib/cloud/instance/scripts/part-001`
+  3. connect to instance `ssh -i /path/to/key ubuntu@{{ public_ip }}`
 
-  5. execute install script: `bash -ex /var/lib/cloud/instance/scripts/part-001`
+  4. update secrets in install script `/var/lib/cloud/instance/scripts/part-001`
+
+  5. execute install script `bash -ex /var/lib/cloud/instance/scripts/part-001`
 
   * Azure Key Vault may be able automate secrets injection. (steps 3-5).
   ** this may be similar to how Amazon does it with SSM ParameterStore,
