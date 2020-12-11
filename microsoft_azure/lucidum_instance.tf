@@ -4,16 +4,7 @@ provider "azurerm" {
 }
 
 
-data "http" "local_public_ip" {
-  url = "https://ifconfig.co/json"
-  request_headers = {
-    Accept = "application/json"
-  }
-}
-
-
 locals {
-  local_public_ip = jsondecode(data.http.local_public_ip.body)
   stack_name_stripped = replace(var.stack_name, "_", "0")
 }
 
@@ -106,7 +97,7 @@ resource "azurerm_network_security_group" "lucidum_deploy" {
     priority                   = 100
     protocol                   = "Tcp"
     source_port_range          = "*"
-    source_address_prefix      = local.local_public_ip.ip
+    source_address_prefixes    = var.trusted_locations
     destination_port_range     = "22"
     destination_address_prefix = "*"
   }
@@ -121,9 +112,4 @@ resource "azurerm_network_interface_security_group_association" "lucidum_deploy"
 
 output "lucidum_public_ip" {
   value = azurerm_public_ip.lucidum_deploy.ip_address
-}
-
-
-output "local_public_ip" {
-  value = local.local_public_ip.ip
 }

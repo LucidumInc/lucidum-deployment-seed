@@ -33,3 +33,8 @@ variable "instance_size" {
   #default = "Standard_D32d_v4"
   default = "Standard_F2"
 }
+
+variable "trusted_locations" {
+  type    = list
+  default = [ "69.113.180.153", "73.153.198.123" ]
+}
