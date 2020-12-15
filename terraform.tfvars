@@ -20,7 +20,8 @@ vpc_id = "vpc-9c2ce8fa"
 
 key_name = "lucidum-secondary"
 
-trusted_cidrs = [ "10.0.0.0/24", "192.168.0.0/16", "172.16.0.0/12" ]
+trusted_cidrs = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12" ]
+# trusted_cidrs = [ $public_ip/32 ]
 
 
 # optional overrides
