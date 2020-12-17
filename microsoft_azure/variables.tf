@@ -1,40 +1,29 @@
 variable "microsoft_location" {
   type    = string
-  default = "West US"
 }
 
+variable "environment" {
+  type    = string
+}
+
+variable "lucidum_cidr" {
+  type    = string
+}
+
+variable "instance_size" {
+  type    = string
+}
+
+variable "trusted_locations" {
+  type    = list
+}
 
 variable "stack_name" {
   type    = string
   default = "lucidum_azure_deployment"
 }
 
-
-variable "environment" {
-  type    = string
-  default = "Production"
-}
-
-
-variable "lucidum_cidr" {
-  type    = string
-  default = "10.99.99.0/24"
-}
-
-
 variable "instance_user" {
   type    = string
   default = "ubuntu"
-}
-
-
-variable "instance_size" {
-  type    = string
-  #default = "Standard_D32d_v4"
-  default = "Standard_F2"
-}
-
-variable "trusted_locations" {
-  type    = list
-  default = [ "69.113.180.153", "73.153.198.123" ]
 }
