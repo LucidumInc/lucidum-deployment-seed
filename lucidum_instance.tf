@@ -3,14 +3,12 @@ provider "aws" {
   profile = var.aws_profile
 }
 
-
 locals {
   secgroup_id  = var.security_group_id != "" ? var.security_group_id : aws_security_group.lucidum[0].id
   profile_name = var.instance_profile_name != "" ? var.instance_profile_name : aws_iam_instance_profile.lucidum[0].name
   lucidum_prefix = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}"
   lucidum_env = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}-${var.environment}"
 }
-
 
 data "aws_ami" "lucidum_ami" {
   most_recent = true
@@ -28,60 +26,11 @@ data "aws_ami" "lucidum_ami" {
   owners = [ var.source_ami_account_number ]
 }
 
-
 resource "aws_security_group" "lucidum" {
   count       = var.security_group_id == "" ? 1 : 0
   name        = local.lucidum_env
   description = local.lucidum_env
   vpc_id      = var.vpc_id
-
-  ingress {
-    description = "debug icmp"
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
-    cidr_blocks = var.trusted_cidrs
-  }
-
-  ingress {
-    description = "allow ssh"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = var.trusted_cidrs
-  }
-
-  ingress {
-    description = "allow http"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = var.trusted_cidrs
-  }
-
-  ingress {
-    description = "allow https"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = var.trusted_cidrs
-  }
-
-  ingress {
-    description = "allow connector endpoint"
-    from_port   = 5500
-    to_port     = 5501
-    protocol    = "tcp"
-    cidr_blocks = var.trusted_cidrs
-  }
-
-  ingress {
-    description = "allow web ui"
-    from_port   = 9080
-    to_port     = 9080
-    protocol    = "tcp"
-    cidr_blocks = var.trusted_cidrs
-  }
 
   egress {
     from_port   = 0
@@ -95,6 +44,65 @@ resource "aws_security_group" "lucidum" {
   }
 }
 
+resource "aws_security_group_rule" "allow_ssh" {
+  count             = var.security_group_id == "" && var.playbook_edition != "community" ? 1 : 0
+  type              = "ingress"
+  to_port           = 22
+  from_port         = 22
+  protocol          = "tcp"
+  security_group_id = aws_security_group.lucidum[0].id
+  cidr_blocks       = var.trusted_cidrs
+}
+
+resource "aws_security_group_rule" "allow_api" {
+  count             = var.security_group_id == "" && var.playbook_edition != "community" ? 1 : 0
+  type              = "ingress"
+  to_port           = 5500
+  from_port         = 5501
+  protocol          = "tcp"
+  security_group_id = aws_security_group.lucidum[0].id
+  cidr_blocks       = var.trusted_cidrs
+}
+
+resource "aws_security_group_rule" "allow_airflow" {
+  count             = var.security_group_id == "" && var.playbook_edition != "community" ? 1 : 0
+  type              = "ingress"
+  to_port           = 9080
+  from_port         = 9080
+  protocol          = "tcp"
+  security_group_id = aws_security_group.lucidum[0].id
+  cidr_blocks       = var.trusted_cidrs
+}
+
+resource "aws_security_group_rule" "allow_icmp" {
+  count             = var.security_group_id == "" ? 1 : 0
+  type              = "ingress"
+  to_port           = -1
+  from_port         = -1
+  protocol          = "icmp"
+  security_group_id = aws_security_group.lucidum[0].id
+  cidr_blocks       = var.trusted_cidrs
+}
+
+resource "aws_security_group_rule" "allow_http" {
+  count             = var.security_group_id == "" ? 1 : 0
+  type              = "ingress"
+  to_port           = 80
+  from_port         = 80
+  protocol          = "tcp"
+  security_group_id = aws_security_group.lucidum[0].id
+  cidr_blocks       = var.trusted_cidrs
+}
+
+resource "aws_security_group_rule" "allow_https" {
+  count             = var.security_group_id == "" ? 1 : 0
+  type              = "ingress"
+  to_port           = 443
+  from_port         = 443
+  protocol          = "tcp"
+  security_group_id = aws_security_group.lucidum[0].id
+  cidr_blocks       = var.trusted_cidrs
+}
 
 resource "aws_instance" "lucidum" {
   ami                         = var.lucidum_ami_id == "" ? data.aws_ami.lucidum_ami.id : var.lucidum_ami_id

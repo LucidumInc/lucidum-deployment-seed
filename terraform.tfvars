@@ -6,9 +6,9 @@ availability_zone = "us-west-1b"
 
 source_ami_account_number = "308025194586"  # lucidum account
 
-playbook_version = "latest"
+playbook_version = "v0.1.10"
 
-playbook_edition = "ubuntu18"
+playbook_edition = "community"
 
 instance_size = "t3.large"
 
@@ -20,8 +20,7 @@ vpc_id = "vpc-9c2ce8fa"
 
 key_name = "lucidum-secondary"
 
-trusted_cidrs = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12" ]
-# trusted_cidrs = [ $public_ip/32 ]
+trusted_cidrs = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12", "69.113.180.153/32" ]
 
 
 # optional overrides
