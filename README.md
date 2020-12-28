@@ -1,6 +1,6 @@
 # lucidum-ami-deployment-seed
 
-0. set variables is `terraform.tfvars`
+0. set variables in `terraform.tfvars`
 
 1. set secrets in boot script `boot_[*].sh` when not community edition
 
