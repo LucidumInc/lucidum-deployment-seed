@@ -82,6 +82,7 @@ resource "azurerm_linux_virtual_machine" "lucidum_deploy" {
   os_disk {
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
+    disk_size_gb         = 1000
   }
 }
 
