@@ -1,10 +1,16 @@
 # lucidum-ami-deployment-seed
 
-- set variables is `terraform.tfvars`
+0. set variables is `terraform.tfvars`
 
-- set secrets in boot script `boot_[*].sh`
+1. set secrets in boot script `boot_[*].sh` when not community edition
 
-- execute `terraform init` and `terraform apply`
+2. download and install terraform https://www.terraform.io/downloads.html
+
+3. configure amazon cloud credentials https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
+
+4. execute `terraform init`
+
+5. execute `terraform apply`
 
 
 
