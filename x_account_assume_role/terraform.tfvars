@@ -13,5 +13,5 @@ trust_account = "123456789012"
 
 # optional variables
 
-#aws_region = "us-west-1"
-aws_profile = "lucidum-secondary"
+#aws_region = "us-west-2"
+#aws_profile = "subaccount-awscli-profile"
