@@ -8,7 +8,7 @@ aws_region = "us-west-1"
 
 source_ami_account_number = "308025194586"  # lucidum account
 
-playbook_version = "v0.1.11"
+playbook_version = "v0.1.12"
 
 playbook_edition = "community"
 
