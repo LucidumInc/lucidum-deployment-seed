@@ -12,7 +12,7 @@ playbook_version = "v0.1.11"
 
 playbook_edition = "community"
 
-instance_size = "t3.large"
+instance_size = "t3.2xlarge"
 
 associate_public_ip_address = true
 
