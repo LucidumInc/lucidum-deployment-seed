@@ -8,7 +8,7 @@ aws_region = "us-west-1"
 
 source_ami_account_number = "308025194586"  # lucidum account
 
-playbook_version = "v0.1.12"
+playbook_version = "v0.1.13"
 
 playbook_edition = "community"
 
@@ -20,15 +20,14 @@ subnet_id = "subnet-12345678"
 
 vpc_id = "vpc-12345678"
 
+trusted_cidrs = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12", "0.0.0.0/0" ]
 
-trusted_cidrs = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12", "69.113.180.153/32" ]
+key_name = ""
 
 
 # optional overrides
 
 #aws_profile = ""
-
-#key_name = ""
 
 #security_group_id = ""
 
