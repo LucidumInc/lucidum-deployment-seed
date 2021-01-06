@@ -28,10 +28,6 @@ variable "vpc_id" {
   type = string
 }
 
-variable "key_name" {
-  type = string
-}
-
 variable "trusted_cidrs" {
   type = list
 }
@@ -46,6 +42,11 @@ variable "playbook_edition" {
 
 
 # optional overrides
+
+variable "key_name" {
+  type = string
+  default = ""
+}
 
 variable "security_group_id" {
   type    = string

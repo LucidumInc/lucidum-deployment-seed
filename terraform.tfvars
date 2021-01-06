@@ -20,12 +20,13 @@ subnet_id = "subnet-12345678"
 
 vpc_id = "vpc-12345678"
 
-trusted_cidrs = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12", "0.0.0.0/0" ]
+trusted_cidrs = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12" ]
 
-key_name = ""
 
 
 # optional overrides
+
+#key_name = ""
 
 #aws_profile = ""
 
