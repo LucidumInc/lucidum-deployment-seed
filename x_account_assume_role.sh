@@ -24,7 +24,11 @@ for profile in ${aws_profiles}; do
   cp -r ${base_dir}/x_account_assume_role ${base_dir}/x_account_assume_role_${profile}
 
   echo set profile name
-  sed -i '' 's/*aws_profile*/aws_profile=${profile}/' ${base_dir}/x_account_assume_role_${profile}/terraform.tfvars
+  if [ "$(uname)" == "Darwin" ]; then
+    sed -i '' 's/*aws_profile*/aws_profile=${profile}/' ${base_dir}/x_account_assume_role_${profile}/terraform.tfvars
+  else
+    sed -i 's/*aws_profile*/aws_profile=${profile}/' ${base_dir}/x_account_assume_role_${profile}/terraform.tfvars
+  fi
 
   echo initialize terraform
   cd ${base_dir}/x_account_assume_role_${profile} 
