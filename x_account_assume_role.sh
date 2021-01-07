@@ -2,40 +2,60 @@
 
 
 # Set aws profiles to loop thru for creating assume role in sub-accounts
-
-aws_profiles="lucidum lucidum-secondary"
+AWS_PROFILES="
+  awscli-profile-1
+  awscli-profile-2
+"
 
 # Set this to "true" for non-interactive execution
-auto_approve=false
+AUTO_APPROVE=false
 
 
-echo ensure terraform is installed
+echo ensure prereqs are installed
 terraform --version
+aws --version
 
-echo set base directory variable
-base_dir=$(pwd)
+echo set script variables
+BASE_DIR=$(pwd)
+TEMPLATE_FILES="
+  lucidum_assume_role.tf
+  lucidum_assume_role_policy.json
+  terraform.tfvars variables.tf
+  variables.tf
+"
 
-for profile in ${aws_profiles}; do
+for AWS_PROFILE in ${AWS_PROFILES}; do
 
   echo test aws profile
-  aws --profile ${profile} sts get-caller-identity
+  aws --profile ${AWS_PROFILE} sts get-caller-identity
 
-  echo copy cross account template to x_account_assume_role_${profile}
-  cp -r ${base_dir}/x_account_assume_role ${base_dir}/x_account_assume_role_${profile}
-
-  echo set profile name
-  if [ "$(uname)" == "Darwin" ]; then
-    sed -i '' 's/*aws_profile*/aws_profile=${profile}/' ${base_dir}/x_account_assume_role_${profile}/terraform.tfvars
+  echo test terraform iteration root does not exist
+  if [ -d "x_account_assume_role_${AWS_PROFILE}" ]; then
+    echo terraform root exists. please remove directory x_account_assume_role_${AWS_PROFILE}
+    exit 1
   else
-    sed -i 's/*aws_profile*/aws_profile=${profile}/' ${base_dir}/x_account_assume_role_${profile}/terraform.tfvars
+    echo OK
   fi
 
+  echo create iteration template directory
+  mkdir -v ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}
+
+  echo copy iteration template to x_account_assume_role_${AWS_PROFILE}
+  for TEMPLATE_FILE in ${TEMPLATE_FILES}; do
+    rm -fv ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/${TEMPLATE_FILE}
+    cp -v ${BASE_DIR}/x_account_assume_role/${TEMPLATE_FILE} \
+      ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/${TEMPLATE_FILE}
+  done
+
+  echo set iteration profile name
+  echo "aws_profile = \"${AWS_PROFILE}\"" | tee -a ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/terraform.tfvars
+
   echo initialize terraform
-  cd ${base_dir}/x_account_assume_role_${profile} 
+  cd ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}
   terraform init
 
   echo execute terraform
-  if [ "${auto_approve}" == "true" ]; then
+  if [ "${AUTO_APPROVE}" == "true" ]; then
     terraform apply --auto-approve
   else
     terraform apply || true
@@ -43,4 +63,4 @@ for profile in ${aws_profiles}; do
 done
 
 echo -e "\n\nLucidum subaccount role processed for the following aws profiles:"
-echo -e "\n${aws_profiles}\n\n"
+echo -e "\n${AWS_PROFILES}\n\n"
