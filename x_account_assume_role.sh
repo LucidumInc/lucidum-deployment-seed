@@ -24,21 +24,17 @@ TEMPLATE_FILES="
   variables.tf
 "
 
+echo remove any existing role arns file
+rm -fv ${BASE_DIR}/x_account_assume_role_arns.txt
+
+
 for AWS_PROFILE in ${AWS_PROFILES}; do
 
   echo test aws profile
   aws --profile ${AWS_PROFILE} sts get-caller-identity
 
-  echo test terraform iteration root does not exist
-  if [ -d "x_account_assume_role_${AWS_PROFILE}" ]; then
-    echo terraform root exists. please remove directory x_account_assume_role_${AWS_PROFILE}
-    exit 1
-  else
-    echo OK
-  fi
-
   echo create iteration template directory
-  mkdir -v ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}
+  mkdir -pv ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}
 
   echo copy iteration template to x_account_assume_role_${AWS_PROFILE}
   for TEMPLATE_FILE in ${TEMPLATE_FILES}; do
@@ -60,7 +56,14 @@ for AWS_PROFILE in ${AWS_PROFILES}; do
   else
     terraform apply || true
   fi
+
+  echo write out arn file ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt
+  cat ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt | \
+    tee -a ${BASE_DIR}/x_account_assume_role_arns.txt
+  echo | tee -a ${BASE_DIR}/x_account_assume_role_arns.txt
+
 done
 
-echo -e "\n\nLucidum subaccount role processed for the following aws profiles:"
-echo -e "\n${AWS_PROFILES}\n\n"
+echo -e "\n\nLucidum subaccount roles created:"
+cat ${BASE_DIR}/x_account_assume_role_arns.txt
+echo -e "\n\nLucidum assume role batch creation COMPLETE\n\n"

@@ -33,6 +33,12 @@ resource "aws_iam_role_policy" "lucidum_assume_role_trust" {
   policy = file("lucidum_assume_role_policy.json")
 }
 
+resource "local_file" "lucidum_role_arn" {
+  content         = aws_iam_role.lucidum_assume_role.arn
+  filename        = "lucidum_assume_role_arn.txt"
+  file_permission = "0755"
+}
+
 output "lucidum_role_arn" {
   value = aws_iam_role.lucidum_assume_role.arn
 }
