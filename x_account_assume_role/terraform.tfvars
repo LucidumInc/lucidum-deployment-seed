@@ -8,9 +8,4 @@
 
 trust_account = "123456789012"
 
-
-
-
-# optional variables
-
 #aws_profile = "subaccount-awscli-profile"
