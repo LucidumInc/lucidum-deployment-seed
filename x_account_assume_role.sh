@@ -17,6 +17,7 @@ aws --version
 
 echo set script variables
 BASE_DIR=$(pwd)
+X_ACCOUNT_ROLE_NAME=lucidum_assume_role
 TEMPLATE_FILES="
   lucidum_assume_role.tf
   lucidum_assume_role_policy.json
@@ -46,15 +47,28 @@ for AWS_PROFILE in ${AWS_PROFILES}; do
   echo set iteration profile name
   echo "aws_profile = \"${AWS_PROFILE}\"" | tee -a ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/terraform.tfvars
 
-  echo initialize terraform
+  echo change to subaccount terraform root
   cd ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}
+
+  echo initialize terraform
   terraform init
 
-  echo execute terraform
-  if [ "${AUTO_APPROVE}" == "true" ]; then
-    terraform apply --auto-approve
+  echo check if ${X_ACCOUNT_ROLE_NAME} exists in aws profile ${AWS_PROFILE}
+  if aws --profile ${AWS_PROFILE} iam get-role --role-name ${X_ACCOUNT_ROLE_NAME} && \
+    ! terraform show | grep ${X_ACCOUNT_ROLE_NAME}; then
+
+    ACCOUNT_NUMBER=$(aws --profile ${AWS_PROFILE} sts get-caller-identity --query Account --output text)
+    echo "arn:aws:iam::${ACCOUNT_NUMBER}:role/${X_ACCOUNT_ROLE_NAME} - ROLE IS PRE-EXISTING" | \
+      tee ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt
+
   else
-    terraform apply || true
+    echo execute terraform
+    if [ "${AUTO_APPROVE}" == "true" ]; then
+      terraform apply --auto-approve
+    else
+      terraform apply || true
+    fi
+
   fi
 
   echo write out arn file ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt

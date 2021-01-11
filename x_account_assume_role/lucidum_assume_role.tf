@@ -28,9 +28,9 @@ resource "aws_iam_role" "lucidum_assume_role" {
 }
 
 resource "aws_iam_role_policy" "lucidum_assume_role_trust" {
-  name   = var.stack_name
-  role   = aws_iam_role.lucidum_assume_role.name
-  policy = file("lucidum_assume_role_policy.json")
+  name_prefix  = var.stack_name
+  role         = aws_iam_role.lucidum_assume_role.name
+  policy       = file("lucidum_assume_role_policy.json")
 }
 
 resource "local_file" "lucidum_role_arn" {
