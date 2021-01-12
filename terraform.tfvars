@@ -22,13 +22,12 @@ vpc_id = "vpc-12345678"
 
 trusted_cidrs = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12" ]
 
+aws_profile = "profile-main-account"
 
 
 # optional overrides
 
 #key_name = ""
-
-#aws_profile = ""
 
 #security_group_id = ""
 
