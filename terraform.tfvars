@@ -1,28 +1,28 @@
 # required variables
 
-environment = "prod"
+environment = "prod"                # change as needed
 
-availability_zone = "us-west-1b"
+availability_zone = "us-west-1b"    # change as needed
 
-aws_region = "us-west-1"
+aws_region = "us-west-1"            # change as needed
 
-source_ami_account_number = "308025194586"  # lucidum account
+source_ami_account_number = "308025194586"  # Don't change this line
 
-playbook_version = "v0.1.14"
+playbook_version = "v0.1.14"                # Don't change this line
 
-playbook_edition = "community"
+playbook_edition = "community"              # Don't change this line
 
-instance_size = "t3.2xlarge"
+instance_size = "t3.2xlarge"        # change as needed
 
-associate_public_ip_address = true
+associate_public_ip_address = true  
 
-subnet_id = "subnet-12345678"
+subnet_id = "subnet-12345678"       # change as needed
 
-vpc_id = "vpc-12345678"
+vpc_id = "vpc-12345678"             # change as needed
 
-trusted_cidrs = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12" ]
+trusted_cidrs = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12" ]   # change as needed
 
-aws_profile = "profile-main-account"
+aws_profile = "default"             # change as needed
 
 
 # optional overrides
