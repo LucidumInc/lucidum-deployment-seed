@@ -26,7 +26,7 @@ TEMPLATE_FILES="
 "
 
 echo remove any existing role arns file
-rm -fv ${BASE_DIR}/x_account_assume_role_arns.txt
+rm -fv "${BASE_DIR}/x_account_assume_role_arns.txt"
 
 
 for AWS_PROFILE in ${AWS_PROFILES}; do
@@ -35,20 +35,20 @@ for AWS_PROFILE in ${AWS_PROFILES}; do
   aws --profile ${AWS_PROFILE} sts get-caller-identity
 
   echo create iteration template directory
-  mkdir -pv ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}
+  mkdir -pv "${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}"
 
   echo copy iteration template to x_account_assume_role_${AWS_PROFILE}
   for TEMPLATE_FILE in ${TEMPLATE_FILES}; do
-    rm -fv ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/${TEMPLATE_FILE}
-    cp -v ${BASE_DIR}/x_account_assume_role/${TEMPLATE_FILE} \
-      ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/${TEMPLATE_FILE}
+    rm -fv "${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/${TEMPLATE_FILE}"
+    cp -v "${BASE_DIR}/x_account_assume_role/${TEMPLATE_FILE}" \
+      "${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/${TEMPLATE_FILE}"
   done
 
   echo set iteration profile name
-  echo "aws_profile = \"${AWS_PROFILE}\"" | tee -a ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/terraform.tfvars
+  echo "aws_profile = \"${AWS_PROFILE}\"" | tee -a "${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/terraform.tfvars"
 
   echo change to subaccount terraform root
-  cd ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}
+  cd "${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}"
 
   echo initialize terraform
   terraform init
@@ -59,7 +59,7 @@ for AWS_PROFILE in ${AWS_PROFILES}; do
 
     ACCOUNT_NUMBER=$(aws --profile ${AWS_PROFILE} sts get-caller-identity --query Account --output text)
     echo "arn:aws:iam::${ACCOUNT_NUMBER}:role/${X_ACCOUNT_ROLE_NAME} - ROLE IS PRE-EXISTING" | \
-      tee ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt
+      tee "${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt"
 
   else
     echo execute terraform
@@ -72,12 +72,12 @@ for AWS_PROFILE in ${AWS_PROFILES}; do
   fi
 
   echo write out arn file ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt
-  cat ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt | \
-    tee -a ${BASE_DIR}/x_account_assume_role_arns.txt
-  echo | tee -a ${BASE_DIR}/x_account_assume_role_arns.txt
+  cat "${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt" | \
+    tee -a "${BASE_DIR}/x_account_assume_role_arns.txt"
+  echo | tee -a "${BASE_DIR}/x_account_assume_role_arns.txt"
 
 done
 
 echo -e "\n\nLucidum subaccount roles created:"
-cat ${BASE_DIR}/x_account_assume_role_arns.txt
+cat "${BASE_DIR}/x_account_assume_role_arns.txt"
 echo -e "\n\nLucidum assume role batch creation COMPLETE\n\n"
