@@ -8,7 +8,7 @@ aws_region = "us-west-1"            # Your AWS region: change as needed
 
 source_ami_account_number = "308025194586"  # Lucidum AMI account: Don't change this line
 
-playbook_version = "v0.1.14"                # Lucidum Product Version: Don't change this line
+playbook_version = "v0.1.15"                # Lucidum Product Version: Don't change this line
 
 playbook_edition = "community"              # Lucidum Product Edition: Don't change this line
 
