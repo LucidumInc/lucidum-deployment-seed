@@ -113,7 +113,7 @@ resource "aws_instance" "lucidum" {
   vpc_security_group_ids      = [ local.secgroup_id ]
   iam_instance_profile        = local.profile_name
   availability_zone           = var.availability_zone
-  user_data                   = file("boot_${var.playbook_edition}.sh")
+  user_data                   = file("../boot_scripts/boot_${var.playbook_edition}.sh")
 
   root_block_device {
     volume_size = 1000
@@ -175,7 +175,7 @@ resource "aws_iam_role_policy" "lucidum" {
   count  = var.instance_profile_name == "" ? 1 : 0
   name   = local.lucidum_env
   role   = aws_iam_role.lucidum[0].name
-  policy = file("x_account_assume_role/lucidum_assume_role_policy.json")
+  policy = file("../x_account_assume_role/lucidum_assume_role_policy.json")
 }
 
 output "lucidum_instance_private_ip" {

@@ -1,4 +1,5 @@
 .terraform/
+.terraform.lock*
 .vagrant/
 terraform.tfstate*
 x_account_assume_role_*
