@@ -1,18 +1,22 @@
-# Lucidum deployment seed
+# lucidum-ami-deployment-seed
 
+0. set variables in `terraform.tfvars`
 
-This repository contains the necessary code to boot Lucidum product accross multiple cloud providers.
+1. set secrets in boot script `boot_[*].sh` when not community edition
 
-`amazon_aws` provides code to boot on amazon cloud
+2. download and install terraform https://www.terraform.io/downloads.html
 
-`google_compute` provides code to boot on google cloud
+3. configure amazon cloud credentials https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
 
-`microsoft_azure` provides code to boot on microsoft cloud
+4. execute `terraform init`
+
+5. execute `terraform apply`
+
 
 
 ### AWS cross account assume role
 
-`x_account_assume_role` directory for sub-account stack execution
+`x_account_assume_role` directory for child account stack execution
 
 - main-account supports assume role by default and requires no additional action.
   * main-account terraform assume role resources created automatically as part of main stack.
