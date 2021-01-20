@@ -61,7 +61,7 @@ for AWS_PROFILE in ${AWS_PROFILES}; do
 
   echo check if ${X_ACCOUNT_ROLE_NAME} exists in aws profile ${AWS_PROFILE}
   if aws --profile ${AWS_PROFILE} iam get-role --role-name ${X_ACCOUNT_ROLE_NAME} 2> /dev/null && \
-    ! grep ${X_ACCOUNT_ROLE_NAME} terraform.tfstate; then
+    ! grep ${X_ACCOUNT_ROLE_NAME} terraform.tfstate 2> /dev/null; then
 
     ACCOUNT_NUMBER=$(aws --profile ${AWS_PROFILE} sts get-caller-identity --query Account --output text)
     echo "arn:aws:iam::${ACCOUNT_NUMBER}:role/${X_ACCOUNT_ROLE_NAME} - ROLE IS PRE-EXISTING (not under terraform control)" | \

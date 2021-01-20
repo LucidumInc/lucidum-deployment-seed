@@ -1,3 +1,4 @@
 .terraform/
+.vagrant/
 terraform.tfstate*
 x_account_assume_role_*
