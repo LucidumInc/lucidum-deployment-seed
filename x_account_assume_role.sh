@@ -17,13 +17,19 @@ aws --version
 
 echo set script variables
 BASE_DIR=$(pwd)
-X_ACCOUNT_ROLE_NAME=lucidum_assume_role
+X_ACCOUNT_ROLE_NAME=$(grep -A 2 stack_name ${BASE_DIR}/x_account_assume_role/variables.tf | tail -1 | cut -d'"' -f2)
 TEMPLATE_FILES="
   lucidum_assume_role.tf
   lucidum_assume_role_policy.json
   terraform.tfvars variables.tf
   variables.tf
 "
+echo "
+  base_dir:  ${BASE_DIR}
+  role_name:  ${X_ACCOUNT_ROLE_NAME}
+  template_files:  ${TEMPLATE_FILES}
+"
+
 
 echo remove any existing role arns file
 rm -fv "${BASE_DIR}/x_account_assume_role_arns.txt"
@@ -54,11 +60,11 @@ for AWS_PROFILE in ${AWS_PROFILES}; do
   terraform init
 
   echo check if ${X_ACCOUNT_ROLE_NAME} exists in aws profile ${AWS_PROFILE}
-  if aws --profile ${AWS_PROFILE} iam get-role --role-name ${X_ACCOUNT_ROLE_NAME} && \
-    ! terraform show | grep ${X_ACCOUNT_ROLE_NAME}; then
+  if aws --profile ${AWS_PROFILE} iam get-role --role-name ${X_ACCOUNT_ROLE_NAME} 2> /dev/null && \
+    ! grep ${X_ACCOUNT_ROLE_NAME} terraform.tfstate; then
 
     ACCOUNT_NUMBER=$(aws --profile ${AWS_PROFILE} sts get-caller-identity --query Account --output text)
-    echo "arn:aws:iam::${ACCOUNT_NUMBER}:role/${X_ACCOUNT_ROLE_NAME} - ROLE IS PRE-EXISTING" | \
+    echo "arn:aws:iam::${ACCOUNT_NUMBER}:role/${X_ACCOUNT_ROLE_NAME} - ROLE IS PRE-EXISTING (not under terraform control)" | \
       tee "${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt"
 
   else
