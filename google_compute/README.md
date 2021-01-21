@@ -1,1 +1,1 @@
-# Google Cloud Compute Engine Lucidum Deployment
+# lucidum-deployment-seed `google_compute`

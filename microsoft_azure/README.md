@@ -1,3 +1,5 @@
+# lucidum-deployment-seed `microsoft_azure`
+
 To bring up the Lucidum stack on Microsoft Azure:
 
   0. log into Azure CLI
