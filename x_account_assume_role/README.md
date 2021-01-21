@@ -30,4 +30,4 @@ edit `clouformation.sh` to set variables and `bash cloudformation.sh`
 # assume role architecture diagram
 
 
-![alt text](https://github.com/LucidumInc/lucidum-ami-deployment-seed/blob/master/assume-role.jpg?raw=true)
+![alt text](https://github.com/LucidumInc/lucidum-deployment-seed/blob/master/assume-role.jpg?raw=true)

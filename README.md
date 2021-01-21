@@ -22,4 +22,4 @@ This repository contains the necessary code to boot Lucidum product accross mult
   * each sub-account must execute terraform in `x_account_assume_role` subdirectory as terraform root.
 
 - cross account assume role diagram:
-![alt text](https://github.com/LucidumInc/lucidum-ami-deployment-seed/blob/master/assume-role.jpg?raw=true)
+![alt text](https://github.com/LucidumInc/lucidum-deployment-seed/blob/master/assume-role.jpg?raw=true)
