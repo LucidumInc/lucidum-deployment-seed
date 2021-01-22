@@ -60,7 +60,7 @@ for AWS_PROFILE in ${AWS_PROFILES}; do
   terraform init
 
   echo check if ${X_ACCOUNT_ROLE_NAME} exists in aws profile ${AWS_PROFILE}
-  if aws --profile ${AWS_PROFILE} iam get-role --role-name ${X_ACCOUNT_ROLE_NAME} 2> /dev/null && \
+  if aws --profile ${AWS_PROFILE} iam get-role --role-name ${X_ACCOUNT_ROLE_NAME} &> /dev/null && \
     ! grep ${X_ACCOUNT_ROLE_NAME} terraform.tfstate 2> /dev/null; then
 
     ACCOUNT_NUMBER=$(aws --profile ${AWS_PROFILE} sts get-caller-identity --query Account --output text)
