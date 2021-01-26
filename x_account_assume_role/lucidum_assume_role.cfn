@@ -85,5 +85,6 @@ Resources:
                   - securityhub:Get*
                   - securityhub:List*
                   - ssm:Get*
+                  - sts:AssumeRole
                   - sts:Get*
                   - tag:Get*
