@@ -5,6 +5,17 @@ set -o errexit
 #set -o verbose
 
 
+echo "##################################################"
+echo "#                                                #"
+echo "#             lucidum iam policy                 #"
+echo "#           cloudformation wrapper               #"
+echo "#                                                #"
+echo "#                                                #"
+echo "#           @nand0p - January 2021               #"
+echo "#                                                #"
+echo "##################################################"
+
+
 TRUST_ACCOUNT=123456789012
 IDEMPOTENT_RUN=true
 AWS_REGION=us-west-1
@@ -18,15 +29,20 @@ TRUST_EXTERNAL_ID=lucidum-access
 ACCOUNT_NUMBER=$(aws sts get-caller-identity \
   --profile ${AWS_PROFILE} \
   --region ${AWS_REGION} \
-  --query Account --output text 2> /dev/null)
+  --query Account \
+  --output text 2> /dev/null)
 
 
 if [ "${IDEMPOTENT_RUN}" == "true" ]; then
+  echo dont fail on existing policy bucket
   S3_BUCKET=${S3_BUCKET}-$(date +%s)
 fi
 
 
-if ! aws s3 ls --region ${AWS_REGION} --profile ${AWS_PROFILE} s3://${S3_BUCKET} &> /dev/null; then
+echo check policy bucket exists
+if ! aws s3 ls s3://${S3_BUCKET} \
+   --region ${AWS_REGION} \
+   --profile ${AWS_PROFILE} &> /dev/null; then
 
   echo create iam policy bucket
   aws s3api create-bucket \
@@ -45,7 +61,7 @@ aws s3api put-object \
   --body ${S3_KEY}
 
 
-echo deploy cloudformation
+echo check stack exists
 if aws cloudformation describe-stacks \
   --region ${AWS_REGION} \
   --profile ${AWS_PROFILE} \
@@ -68,6 +84,7 @@ else
 fi
 
 
+echo deploy cloudformation
 aws cloudformation deploy \
   --region ${AWS_REGION} \
   --profile ${AWS_PROFILE} \
@@ -82,6 +99,7 @@ aws cloudformation deploy \
     AssumeRoleName=${ROLE_NAME} || true
 
 
+echo verify stack
 aws cloudformation describe-stacks \
   --region ${AWS_REGION} \
   --profile ${AWS_PROFILE} \
