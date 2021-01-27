@@ -6,7 +6,7 @@ set -o errexit
 
 
 TRUST_ACCOUNT=123456789012
-IDEMPOTENT_BUCKET=true
+IDEMPOTENT_RUN=true
 AWS_REGION=us-west-1
 AWS_PROFILE=default
 ROLE_NAME=lucidum_assume_role
@@ -21,7 +21,7 @@ ACCOUNT_NUMBER=$(aws sts get-caller-identity \
   --query Account --output text 2> /dev/null)
 
 
-if [ "${IDEMPOTENT_BUCKET}" == "true" ]; then
+if [ "${IDEMPOTENT_RUN}" == "true" ]; then
   S3_BUCKET=${S3_BUCKET}-$(date +%s)
 fi
 
