@@ -27,26 +27,26 @@ Resources:
   LucidumAssumeRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Ref 'AssumeRoleName'
-      Description: !Ref 'AssumeRoleName'
+      RoleName: !Ref AssumeRoleName
+      Description: !Ref AssumeRoleName
       Path: /
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
           - Effect: Allow
             Principal:
-              AWS: !Ref 'TrustAccount'
+              AWS: !Ref TrustAccount
             Action:
               - sts:AssumeRole
             Condition:
               StringEquals:
-                sts:ExternalId: !Ref 'TrustExternalId'
+                sts:ExternalId: !Ref TrustExternalId
 
       Policies:
-        - PolicyName: !Ref 'AssumeRoleName'
+        - PolicyName: !Ref AssumeRoleName
           PolicyDocument:
-            'Fn::Transform':
-              Name: 'AWS::Include'
+            Fn::Transform:
+              Name: AWS::Include
               Parameters:
                 Location: !Sub
                   - s3://${S3Bucket}/${S3Key}
