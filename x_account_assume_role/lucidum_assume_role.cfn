@@ -4,6 +4,12 @@ Parameters:
   TrustAccount:
     Type: String
     Description: AWS account number to trust
+  S3Bucket:
+    Type: String
+    Description: s3 bucket source lucidum iam policy
+  S3Key:
+    Type: String
+    Description: s3 key source lucidum iam policy
   TrustExternalId:
     Type: String
     Default: lucidum-access
@@ -39,52 +45,9 @@ Resources:
       Policies:
         - PolicyName: !Ref 'AssumeRoleName'
           PolicyDocument:
-            Version: 2012-10-17
-            Statement:
-              - Effect: Allow
-                Resource: "*"
-                Action:
-                  - cloudtrail:Describe*
-                  - cloudtrail:Get*
-                  - cloudtrail:List*
-                  - cloudtrail:LookupEvents
-                  - cloudwatch:Describe*
-                  - cloudwatch:Get*
-                  - cloudwatch:List*
-                  - config:Describe*
-                  - config:Get*
-                  - config:List*
-                  - dynamodb:Describe*
-                  - dynamodb:List*
-                  - dynamodb:Scan
-                  - ec2:Describe*
-                  - ec2:Get*
-                  - ecs:Describe*
-                  - ecs:List*
-                  - eks:Describe*
-                  - eks:List*
-                  - elasticloadbalancing:Describe*
-                  - guardduty:Get*
-                  - guardduty:List*
-                  - iam:Get*
-                  - iam:List*
-                  - inspector:Describe*
-                  - inspector:Get*
-                  - inspector:List*
-                  - kms:Describe*
-                  - kms:Get*
-                  - kms:List*
-                  - lambda:Get*
-                  - lambda:List*
-                  - pricing:Describe*
-                  - pricing:Get*
-                  - route53:List*
-                  - s3:Get*
-                  - s3:List*
-                  - securityhub:Describe*
-                  - securityhub:Get*
-                  - securityhub:List*
-                  - ssm:Get*
-                  - sts:AssumeRole
-                  - sts:Get*
-                  - tag:Get*
+            'Fn::Transform':
+              Name: 'AWS::Include'
+              Parameters:
+                Location: !Sub
+                  - s3://${S3Bucket}/${S3Key}
+                  - { S3Bucket: !Ref S3Bucket, S3Key: !Ref S3Key }
