@@ -18,6 +18,10 @@ Parameters:
     Type: String
     Default: lucidum_assume_role
     Description: Lucidum assume role name
+  MaxSessionDuration:
+    Type: String
+    Default: 43200
+    Description: Lucidum assume role session duration
 
 Outputs:
   AssumeRoleArn:
@@ -29,6 +33,7 @@ Resources:
     Properties:
       RoleName: !Ref AssumeRoleName
       Description: !Ref AssumeRoleName
+      MaxSessionDuration: !Ref MaxSessionDuration
       Path: /
       AssumeRolePolicyDocument:
         Version: 2012-10-17

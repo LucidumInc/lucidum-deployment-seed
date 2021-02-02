@@ -18,12 +18,22 @@ aws --version
 echo set script variables
 BASE_DIR=$(pwd)
 X_ACCOUNT_ROLE_NAME=$(grep -A 2 stack_name ${BASE_DIR}/x_account_assume_role/variables.tf | tail -1 | cut -d'"' -f2)
-TEMPLATE_FILES="
-  lucidum_assume_role.tf
-  lucidum_assume_role_policy.json
-  terraform.tfvars variables.tf
-  variables.tf
-"
+
+if [ "$1" == "cloudformation" ]; then
+  TEMPLATE_FILES="
+    lucidum_assume_role_policy.json
+    lucidum_assume_role.cfn
+    cloudformation.sh
+  "
+else
+  TEMPLATE_FILES="
+    lucidum_assume_role_policy.json
+    terraform.tfvars variables.tf
+    lucidum_assume_role.tf
+    variables.tf
+  "
+fi
+
 echo "
   base_dir:  ${BASE_DIR}
   role_name:  ${X_ACCOUNT_ROLE_NAME}
@@ -56,25 +66,31 @@ for AWS_PROFILE in ${AWS_PROFILES}; do
   echo change to subaccount terraform root
   cd "${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}"
 
-  echo initialize terraform
-  terraform init
-
-  echo check if ${X_ACCOUNT_ROLE_NAME} exists in aws profile ${AWS_PROFILE}
-  if aws --profile ${AWS_PROFILE} iam get-role --role-name ${X_ACCOUNT_ROLE_NAME} &> /dev/null && \
-    ! grep ${X_ACCOUNT_ROLE_NAME} terraform.tfstate 2> /dev/null; then
-
-    ACCOUNT_NUMBER=$(aws --profile ${AWS_PROFILE} sts get-caller-identity --query Account --output text)
-    echo "arn:aws:iam::${ACCOUNT_NUMBER}:role/${X_ACCOUNT_ROLE_NAME} - ROLE IS PRE-EXISTING (not under terraform control)" | \
-      tee "${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt"
+  echo execute infrastructure code
+  if [ "$1" == "cloudformation" ]; then
+    echo cloudformation
 
   else
-    echo execute terraform
-    if [ "${AUTO_APPROVE}" == "true" ]; then
-      terraform apply --auto-approve
-    else
-      terraform apply || true
-    fi
+    echo terraform
+    terraform init
 
+    echo check if ${X_ACCOUNT_ROLE_NAME} exists in aws profile ${AWS_PROFILE}
+    if aws --profile ${AWS_PROFILE} iam get-role --role-name ${X_ACCOUNT_ROLE_NAME} &> /dev/null && \
+      ! grep ${X_ACCOUNT_ROLE_NAME} terraform.tfstate 2> /dev/null; then
+
+      ACCOUNT_NUMBER=$(aws --profile ${AWS_PROFILE} sts get-caller-identity --query Account --output text)
+      echo "arn:aws:iam::${ACCOUNT_NUMBER}:role/${X_ACCOUNT_ROLE_NAME} - ROLE IS PRE-EXISTING (not under terraform control)" | \
+        tee "${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt"
+
+    else
+      echo execute terraform
+      if [ "${AUTO_APPROVE}" == "true" ]; then
+        terraform apply --auto-approve
+      else
+        terraform apply || true
+      fi
+
+    fi
   fi
 
   echo write out arn file ${BASE_DIR}/x_account_assume_role_${AWS_PROFILE}/lucidum_assume_role_arn.txt
