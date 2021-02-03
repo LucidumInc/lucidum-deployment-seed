@@ -21,3 +21,8 @@ variable "aws_profile" {
   type    = string
   default = "default"
 }
+
+variable "max_session_duration" {
+  type    = number
+  default = 43200
+}
