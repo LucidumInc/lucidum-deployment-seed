@@ -68,7 +68,7 @@ for AWS_PROFILE in ${AWS_PROFILES}; do
 
   echo execute infrastructure code
   if [ "$1" == "cloudformation" ]; then
-    echo cloudformation
+    bash cloudformation.sh ${AWS_PROFILE}
 
   else
     echo terraform

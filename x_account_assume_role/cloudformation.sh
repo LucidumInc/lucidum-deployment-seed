@@ -16,16 +16,27 @@ echo "#                                                #"
 echo "##################################################"
 
 
-TRUST_ACCOUNT=123456789012
+TRUST_ACCOUNT=308025194586
 IDEMPOTENT_RUN=true
 AWS_REGION=us-west-1
-AWS_PROFILE=default
 ROLE_NAME=lucidum_assume_role
 STACK_NAME=lucidum-assume-role
 STACK_TEMPLATE=lucidum_assume_role.cfn
 S3_KEY=lucidum_assume_role_policy.json
 S3_BUCKET=lucidum-assume-role-iam-policy-cfn
 TRUST_EXTERNAL_ID=lucidum-access
+ROLE_ARN_FILE=lucidum_assume_role_arn.txt
+
+
+echo set aws profile if passed
+if [ "$1" != "" ]; then
+  AWS_PROFILE=$1
+else
+  AWS_PROFILE=default
+fi
+echo running with aws profile ${AWS_PROFILE}
+
+
 ACCOUNT_NUMBER=$(aws sts get-caller-identity \
   --profile ${AWS_PROFILE} \
   --region ${AWS_REGION} \
@@ -75,7 +86,7 @@ else
     --role-name ${ROLE_NAME} &> /dev/null; then
 
     echo
-    echo "arn:aws:iam::${ACCOUNT_NUMBER}:role/${ROLE_NAME} - ROLE IS PRE-EXISTING (not under cloudformation control)"
+    echo "arn:aws:iam::${ACCOUNT_NUMBER}:role/${ROLE_NAME} - ROLE IS PRE-EXISTING (not under cloudformation control)" | tee ${ROLE_ARN_FILE}
     echo
     echo please delete and try again.
     echo
@@ -99,12 +110,30 @@ aws cloudformation deploy \
     AssumeRoleName=${ROLE_NAME} || true
 
 
+echo clean s3
+if [ "${IDEMPOTENT_RUN}" == "true" ]; then
+  aws \
+    --region ${AWS_REGION} \
+    --profile ${AWS_PROFILE} \
+    s3 rm --recursive s3://${S3_BUCKET}
+  aws \
+    --region ${AWS_REGION} \
+    --profile ${AWS_PROFILE} \
+    s3 rb s3://${S3_BUCKET}
+fi
+
+
 echo verify stack
 aws cloudformation describe-stacks \
   --region ${AWS_REGION} \
   --profile ${AWS_PROFILE} \
   --stack-name ${STACK_NAME} \
   --query Stacks[0].Outputs
+
+
+echo output arn file
+echo "arn:aws:iam::${ACCOUNT_NUMBER}:role/${ROLE_NAME}" | \
+  tee ${ROLE_ARN_FILE}
 
 
 echo
