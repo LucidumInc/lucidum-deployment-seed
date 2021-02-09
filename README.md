@@ -29,4 +29,4 @@ This repository contains the necessary code to boot Lucidum product accross mult
 
 `x_account_assume_role.sh` will allow the creation of roles accross multiple AWS accounts in batch mode. This script will iterate thru a list of AWS CLI profiles, and execute the necessary Terraform (default) or Cloudformation in each subaccount.
 
-`x_account_assume_role.sh` will execute in Terraform mode by default. If Cloudformation mode is prefered, add the `cloudformation` argument to the script, such as: `bash x_account_assume_role.sh cloudformation`. NOTE: Cloudformation does not cleanly cleanup on failures, so may need to clean up cfn stacks in subaccounts on failures, such as erroneous TRUST_ACCOUNT value.
+`x_account_assume_role.sh` will execute in Terraform mode by default. If Cloudformation mode is prefered, add the `cloudformation` argument to the script, such as: `bash x_account_assume_role.sh cloudformation`. NOTE: Cloudformation does not cleanly cleanup on failures, so may need to clean up cfn stacks in subaccounts on failures, such as due to erroneous TRUST_ACCOUNT value.
