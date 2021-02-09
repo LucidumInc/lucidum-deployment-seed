@@ -56,9 +56,9 @@ if ! aws s3 ls s3://${S3_BUCKET} \
    --profile ${AWS_PROFILE} &> /dev/null; then
 
   echo create iam policy bucket
-  aws s3api create-bucket \
-    --profile ${AWS_PROFILE} \
-    --bucket ${S3_BUCKET}
+  aws s3 mb s3://${S3_BUCKET} \
+    --region ${AWS_REGION} \
+    --profile ${AWS_PROFILE}
   sleep 5
 fi
 
@@ -112,14 +112,12 @@ aws cloudformation deploy \
 
 echo clean s3
 if [ "${IDEMPOTENT_RUN}" == "true" ]; then
-  aws \
+  aws s3 rm --recursive s3://${S3_BUCKET} \
     --region ${AWS_REGION} \
-    --profile ${AWS_PROFILE} \
-    s3 rm --recursive s3://${S3_BUCKET}
-  aws \
+    --profile ${AWS_PROFILE}
+  aws s3 rb s3://${S3_BUCKET} \
     --region ${AWS_REGION} \
-    --profile ${AWS_PROFILE} \
-    s3 rb s3://${S3_BUCKET}
+    --profile ${AWS_PROFILE}
 fi
 
 
