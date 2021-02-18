@@ -38,6 +38,12 @@
                 "logs:PutLogEvents",
                 "logs:CreateLogStream",
                 "logs:CreateLogGroup",
+                "logs:Describe*",
+                "logs:FilterLogEvents",
+                "logs:Get*",
+                "logs:List*",
+                "organizations:Describe*",
+                "organizations:List*"
                 "pricing:Describe*",
                 "pricing:Get*",
                 "route53:List*",
