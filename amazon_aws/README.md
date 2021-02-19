@@ -2,7 +2,7 @@
 
 0. set variables in `terraform.tfvars`
 
-1. set secrets in boot script `boot_[*].sh` when not community edition\
+1. set secrets in boot script `../boot_scripts/boot_[*].sh` when not community edition\
    ** to obtain secrets for enterprise edition, please contact Lucidum **
 
 2. download and install terraform https://www.terraform.io/downloads.html
