@@ -13,6 +13,7 @@ Users can execute boot scripts directly.
 
 2. execute `bash boot_ubuntu18.sh`
 
+3. navigate to Lucidum portal and enter license key https://[instance-ip]/CMDB
 
 We recommend the following minimum resources:
 `memory 128G`
