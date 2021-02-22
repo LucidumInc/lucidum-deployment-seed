@@ -6,7 +6,10 @@ Scripts are invoked by Terraform/Cloudformation as instance userdata.
 
 Users can execute boot scripts directly.
 
-0. Contact sales and obtain enterprise license
+0. Contact sales and obtain enterprise license\
+   Provide us with your GPG public key and we will provide you with Enterprise secrets\
+   ** https://gnupg.org/ **
+   
 
 1. Boot official Ubuntu18 virtual machine\
    ** https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.ova **
