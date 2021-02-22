@@ -8,7 +8,7 @@ Users can execute boot scripts directly.
 
 0. Contact Lucidum Sales for
    - Lucidum License Key: needed to unlock Lucidum UI
-   - Lucidum Enterprise AWS Secrets: needed to download containers from Lucidum AWS ECR
+   - Lucidum Enterprise AWS Secrets: needed to download containers from Lucidum AWS ECR\
    Provide us with your GPG public key and we will use it to encrypt and send you encrypted secrets\
    ** https://gnupg.org/ **
 
