@@ -6,7 +6,8 @@ Scripts are invoked by Terraform/Cloudformation as instance userdata.
 
 Users can execute boot scripts directly.
 
-0. boot official Ubuntu18 virtual machine
+0. boot official Ubuntu18 virtual machine\
+   ** https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.ova **
 
 1. set secrets in `boot_ubuntu18.sh`
 
