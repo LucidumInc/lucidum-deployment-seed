@@ -11,3 +11,9 @@ Users can execute boot scripts directly.
 1. set secrets in `boot_ubuntu18.sh`
 
 2. execute `bash boot_ubuntu18.sh`
+
+
+We recommend the following minimum resources:
+`memory 128G`
+`cpu 16 cores`
+`hard drive 1T SSD`
