@@ -15,6 +15,7 @@ Users can execute boot scripts directly.
 1. Boot official Ubuntu18 virtual machine\
    You can download the Lucidum supported ubuntu18 OVA from this link:\
    ** https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.ova **
+   We recommend the following minimum resources: `memory 128G` `cpu 16 cores` `hard drive 1T SSD`
 
 2. Decrypt Lucidum Enterprise AWS Secrets and set in `boot_ubuntu18.sh`
 
@@ -23,8 +24,3 @@ Users can execute boot scripts directly.
 4. Navigate to Lucidum UI portal and enter Lucidum License Key https://[your-lucidum-instance-ip]/CMDB
 
 5. Instance setup is complete. You are now ready to configure data injestion connectors.
-
-We recommend the following minimum resources:
-`memory 128G`
-`cpu 16 cores`
-`hard drive 1T SSD`
