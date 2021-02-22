@@ -7,18 +7,18 @@ Scripts are invoked by Terraform/Cloudformation as instance userdata.
 Users can execute boot scripts directly.
 
 0. Contact sales and obtain enterprise license\
-   Provide us with your GPG public key and we will provide you with Enterprise secrets\
+   Provide us with your GPG public key and we will provide you with Lucidum Enterprise secrets\
    ** https://gnupg.org/ **
    
 
 1. Boot official Ubuntu18 virtual machine\
    ** https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.ova **
 
-2. Set secrets in `boot_ubuntu18.sh`
+2. Set Lucidum Enterprise secrets in `boot_ubuntu18.sh`
 
 3. Execute `bash boot_ubuntu18.sh`
 
-4. Navigate to ui portal and enter license key https://[instance-ip]/CMDB
+4. Navigate to UI portal and enter license key https://[instance-ip]/CMDB
 
 We recommend the following minimum resources:
 `memory 128G`
