@@ -1,7 +1,7 @@
 # lucidum-deployment-seed `amazon_aws`
 
 
-0. Contact Lucidum Sales:
+0. Contact Lucidum Sales:\
     Lucidum Community License Key: needed to unlock Lucidum UI\
     Lucidum Enterprise AWS Secrets: needed to download containers from Lucidum AWS ECR\
     Provide us with your GPG public key and we will use it to encrypt and send you encrypted secrets\
