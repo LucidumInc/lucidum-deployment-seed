@@ -19,7 +19,7 @@ Users can execute boot scripts directly.
 
 2. Decrypt Lucidum Enterprise AWS Secrets and set in `boot_ubuntu18.sh`
 
-3. Execute `bash boot_ubuntu18.sh`
+3. Execute `sudo bash boot_ubuntu18.sh`
 
 4. Navigate to Lucidum UI portal and enter Lucidum License Key https://[your-lucidum-instance-ip]/CMDB
 
