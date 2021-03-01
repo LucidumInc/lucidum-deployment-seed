@@ -12,7 +12,7 @@ Users can execute boot scripts directly.
    You can download GPG tools here: https://gnupg.org/
 
 1. Boot official Ubuntu18 virtual machine\
-   You can download the Lucidum supported ubuntu18 OVA from this link:\
+   - You can download the Lucidum supported ubuntu18 OVA from this link:\
    https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.ova \
    We recommend the following minimum resources: `memory 128G` `cpu 16 cores` `hard drive 1T SSD`\
    Ensure the virtual machine has internet connectivity. (Verify IP addressing, routing, firewall, http-proxy, etc).
