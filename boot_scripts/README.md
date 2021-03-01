@@ -15,7 +15,7 @@ Users can execute boot scripts directly.
    You can download the Lucidum supported ubuntu18 OVA from this link:\
    https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.ova \
    We recommend the following minimum resources: `memory 128G` `cpu 16 cores` `hard drive 1T SSD`\
-   Ensure the virtual machine has internet connectivity. (Verify addressing, routing, firewall, http-proxy, etc).
+   Ensure the virtual machine has internet connectivity. (Verify IP addressing, routing, firewall, http-proxy, etc).
 
 2. Decrypt Lucidum Enterprise AWS Secrets and set in `boot_ubuntu18.sh`
 
