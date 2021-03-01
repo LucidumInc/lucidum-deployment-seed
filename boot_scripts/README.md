@@ -23,4 +23,4 @@ Users can execute boot scripts directly.
 
 4. Navigate to Lucidum UI portal and enter Lucidum License Key https://[your-lucidum-instance-ip]/CMDB
 
-5. Instance setup is complete. You are now ready to configure data injestion connectors.
+5. Instance setup is complete. You are now ready to configure data connectors.
