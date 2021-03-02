@@ -16,8 +16,6 @@ On-Premesis users, such as VMware, OpenStack, and bare-metal servers, can use th
    Ensure the virtual machine has internet connectivity. (Verify IP addressing, routing, firewall, http-proxy, etc).
 
 2. Decrypt and Set Lucidum Enterprise AWS Secrets
-   - You will be provided with an asc file containing the encrypted secrets
-   - use GnuPG, or any other PGP software, to decrypt
 ```shell
 $ gpg --decrypt customer.asc 
 gpg: encrypted with 2048-bit RSA key, ID 0123456789ABCDEF, created 2020-10-06
@@ -25,6 +23,8 @@ gpg: encrypted with 2048-bit RSA key, ID 0123456789ABCDEF, created 2020-10-06
 aws access id AKIA0123456789ABCDEF
 aws secret key secret-string
 ```
+   - You will be provided with an asc file containing the encrypted secrets
+   - use GnuPG, or any other PGP software, to decrypt
    - set these secrets at the top of `boot_ubuntu18.sh`
 
 3. Execute `sudo bash boot_ubuntu18.sh`
