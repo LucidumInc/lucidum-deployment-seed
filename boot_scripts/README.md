@@ -30,5 +30,16 @@ aws secret key secret-string
 3. Execute `sudo bash boot_ubuntu18.sh`
    - change to the `boot_scripts` directory.
    - for extra script verbosity, use the `-x` bash flag
+```shell
+5 features passed, 0 failed, 0 skipped
+6 scenarios passed, 0 failed, 0 skipped
+25 steps passed, 0 failed, 0 skipped, 0 undefined
+Took 0m8.472s
++ touch /root/.lucidum_installed_bnl
++ echo 'init lucidum complete'
+init lucidum complete
+removed '/root/install_lucidum.sh'
+initialization complete
+```
 
 4. Instance setup is complete. You are now ready to configure data connectors.
