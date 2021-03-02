@@ -37,7 +37,7 @@ $ sudo bash -x boot_ubuntu18.sh
 6 scenarios passed, 0 failed, 0 skipped
 25 steps passed, 0 failed, 0 skipped, 0 undefined
 Took 0m8.472s
-+ touch /root/.lucidum_installed_bnl
++ touch /root/.lucidum_installed_customer
 + echo 'init lucidum complete'
 init lucidum complete
 removed '/root/install_lucidum.sh'
