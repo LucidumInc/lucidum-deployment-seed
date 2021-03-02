@@ -7,17 +7,23 @@
     You can download GPG tools here: https://gnupg.org/
 
 1. Set variables in `terraform.tfvars`
+   - These are your AWS account specific values, such as vpc and subnet ids.
 
-2. Set secrets in boot script `../boot_scripts/boot_[*].sh`
+2. Set Enterprise AWS Secrets in boot script `boot_ubuntu18.sh`
+   - These are the customer specific encrypted secrets we provide you
 
 3. Download and install terraform https://www.terraform.io/downloads.html
+   - Hashicorp provides precompiled Go executables for Terraform
 
 4. Configure amazon cloud credentials https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
+   - awscli default profile should be set to account to deploy Lucidum
+   - awscli profile can be overriden in Terraform variables for advanced users
 
 5. Execute `terraform init`
 
 6. Execute `terraform apply`
 
+7. Lucidum instance is up and ready to configure data connectors.
 
 
 ### AWS cross account assume role
