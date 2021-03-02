@@ -10,7 +10,7 @@ source_ami_account_number = "308025194586"  # Lucidum AMI account: Don't change 
 
 playbook_version = "v0.1.18"                # Lucidum Product Version: change when new version is released
 
-playbook_edition = "community"              # Lucidum Product Edition: Don't change this line
+playbook_edition = "customer"              # Lucidum Product Edition: Don't change this line
 
 instance_size = "t3.2xlarge"        # Your EC2 instance type: change as needed, t3.2xlarge is recommended
 
