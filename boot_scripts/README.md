@@ -1,10 +1,8 @@
 # Lucidum Boot Scripts
 
-Scripts are invoked by Terraform/Cloudformation as instance userdata.
-
-### VMWare / On-Premesis Deployments
-
-Users can execute boot scripts directly.
+The scripts in this directory are invoked by Terraform/Cloudformation as instance userdata when deploying to the cloud.\
+\
+On-Premesis users, such as VMware, OpenStack, or bare-metal servers, can use these scripts directly to boostrap Lucidum:
 
 0. Contact Lucidum Sales
    - Lucidum Enterprise AWS Secrets: needed to download containers from Lucidum AWS ECR\
@@ -18,9 +16,17 @@ Users can execute boot scripts directly.
    Ensure the virtual machine has internet connectivity. (Verify IP addressing, routing, firewall, http-proxy, etc).
 
 2. Decrypt Lucidum Enterprise AWS Secrets and set in `boot_ubuntu18.sh`
+   - You will be provided with an asc file containing the encrypted secrets.
+   - use https://www.gnupg.org/software/tools.html to decrypt
+```shell
+$ gpg --decrypt customer.asc 
+gpg: encrypted with 2048-bit RSA key, ID 0123456789ABCDEF, created 2020-10-06
+      "Lucidum Customer <customer@lucidum.io>"
+aws access id AKIA0123456789ABCDEF
+aws secret key secret-string
+```
 
 3. Execute `sudo bash boot_ubuntu18.sh`
+   - change to the `boot_scripts` directory.
 
-4. Navigate to Lucidum UI portal and enter Lucidum License Key https://[your-lucidum-instance-ip]/CMDB
-
-5. Instance setup is complete. You are now ready to configure data connectors.
+4. Instance setup is complete. You are now ready to configure data connectors.
