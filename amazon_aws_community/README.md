@@ -5,15 +5,20 @@
    - Lucidum Community License Key: needed to unlock Lucidum UI
 
 1. Set variables in `terraform.tfvars`
+   - These are your AWS account specific values, such as vpc and subnet ids
 
 2. Download and install terraform https://www.terraform.io/downloads.html
+   - Hashicorp provides precompiled Go executables for Terraform
 
 3. Configure amazon cloud credentials https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
+   - awscli default profile should be set to account to deploy Lucidum
+   - awscli profile can be overriden in Terraform variables for advanced users
 
 4. Execute `terraform init`
 
 5. Execute `terraform apply`
 
+6. Lucidum instance is up and ready with the default community edition data connectors.
 
 
 ### AWS cross account assume role
