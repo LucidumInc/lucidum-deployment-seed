@@ -1,24 +1,18 @@
-# lucidum-deployment-seed `amazon_aws`
+# lucidum-deployment-seed `amazon_aws_community`
 
 
-0. Contact Lucidum Sales:\
-    Lucidum Community License Key: needed to unlock Lucidum UI\
-    Lucidum Enterprise AWS Secrets: needed to download containers from Lucidum AWS ECR\
-    Provide us with your GPG public key and we will use it to encrypt and send you encrypted secrets\
-    You can download GPG tools here: https://gnupg.org/
+0. Contact Lucidum Sales:
+   - Lucidum Community License Key: needed to unlock Lucidum UI
 
 1. Set variables in `terraform.tfvars`
 
-2. Set secrets in boot script `../boot_scripts/boot_[*].sh` when not community edition\
-   ** to obtain secrets for enterprise edition, please contact Lucidum **
+2. Download and install terraform https://www.terraform.io/downloads.html
 
-3. Download and install terraform https://www.terraform.io/downloads.html
+3. Configure amazon cloud credentials https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
 
-4. Configure amazon cloud credentials https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
+4. Execute `terraform init`
 
-5. Execute `terraform init`
-
-6. Execute `terraform apply`
+5. Execute `terraform apply`
 
 
 
