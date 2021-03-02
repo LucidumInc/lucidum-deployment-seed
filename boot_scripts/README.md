@@ -17,8 +17,8 @@ On-Premesis users, such as VMware, OpenStack, and bare-metal servers, can use th
 
 2. Decrypt and Set Lucidum Enterprise AWS Secrets
    - You will be provided with an asc file containing the encrypted secrets
-   - use GnuPG, or any other PGP software, to decrypt
-   - set these secrets at the top of `boot_ubuntu18.sh`
+   - Use GnuPG, or any other PGP software, to decrypt
+   - Set these secrets at the top of `boot_ubuntu18.sh`
 ```shell
 $ gpg --decrypt customer.asc 
 gpg: encrypted with 2048-bit RSA key, ID 0123456789ABCDEF, created 2020-10-06
@@ -28,8 +28,8 @@ aws secret key secret-string
 ```
 
 3. Execute `sudo bash boot_ubuntu18.sh`
-   - change to the `boot_scripts` directory.
-   - for extra script verbosity, use the `-x` bash flag
+   - Change to the `boot_scripts` directory.
+   - For extra script verbosity, use the `-x` bash flag
 ```shell
 $ sudo bash -x boot_ubuntu18.sh
 ...
