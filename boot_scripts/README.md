@@ -2,7 +2,7 @@
 
 The scripts in this directory are invoked by Terraform/Cloudformation when deploying to the cloud.\
 \
-On-Premesis users, such as VMware, OpenStack, and bare-metal servers, can use these scripts directly to boostrap Lucidum:
+On-Premises users, such as VMware, OpenStack, and bare-metal servers, can use these scripts directly to boostrap Lucidum:
 
 0. Contact Lucidum Sales
    - Lucidum Enterprise AWS Secrets: needed to download containers from Lucidum AWS ECR\
