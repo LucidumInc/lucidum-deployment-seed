@@ -1,13 +1,13 @@
 # Lucidum Boot Scripts
 
-The scripts in this directory are invoked by Terraform/Cloudformation as instance userdata when deploying to the cloud.\
+The scripts in this directory are invoked by Terraform/Cloudformation when deploying to the cloud.\
 \
-On-Premesis users, such as VMware, OpenStack, or bare-metal servers, can use these scripts directly to boostrap Lucidum:
+On-Premesis users, such as VMware, OpenStack, and bare-metal servers, can use these scripts directly to boostrap Lucidum:
 
 0. Contact Lucidum Sales
    - Lucidum Enterprise AWS Secrets: needed to download containers from Lucidum AWS ECR\
-   Provide us with your GPG public key and we will use it to encrypt and send you encrypted secrets\
-   You can download GPG tools here: https://gnupg.org/
+   Provide us with your PGP public key and we will use it to encrypt and send you encrypted secrets\
+   You can download GnuPG tools here: https://gnupg.org/
 
 1. Boot official Ubuntu18 virtual machine
    - You can download the Lucidum supported ubuntu18 OVA from this link:\
@@ -16,8 +16,8 @@ On-Premesis users, such as VMware, OpenStack, or bare-metal servers, can use the
    Ensure the virtual machine has internet connectivity. (Verify IP addressing, routing, firewall, http-proxy, etc).
 
 2. Decrypt Lucidum Enterprise AWS Secrets and set in `boot_ubuntu18.sh`
-   - You will be provided with an asc file containing the encrypted secrets.
-   - use https://www.gnupg.org/software/tools.html to decrypt
+   - You will be provided with an asc file containing the encrypted secrets
+   - use GnuPG, or any other PGP software, to decrypt
 ```shell
 $ gpg --decrypt customer.asc 
 gpg: encrypted with 2048-bit RSA key, ID 0123456789ABCDEF, created 2020-10-06
@@ -28,5 +28,6 @@ aws secret key secret-string
 
 3. Execute `sudo bash boot_ubuntu18.sh`
    - change to the `boot_scripts` directory.
+   - for extra verbosity, use the `-x` bash flag
 
 4. Instance setup is complete. You are now ready to configure data connectors.
