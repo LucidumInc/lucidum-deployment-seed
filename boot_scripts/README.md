@@ -15,7 +15,7 @@ On-Premesis users, such as VMware, OpenStack, and bare-metal servers, can use th
    We recommend the following minimum resources: `memory 128G` `cpu 16 cores` `hard drive 1T SSD`\
    Ensure the virtual machine has internet connectivity. (Verify IP addressing, routing, firewall, http-proxy, etc).
 
-2. Decrypt Lucidum Enterprise AWS Secrets and set in `boot_ubuntu18.sh`
+2. Decrypt and Set Lucidum Enterprise AWS Secrets
    - You will be provided with an asc file containing the encrypted secrets
    - use GnuPG, or any other PGP software, to decrypt
 ```shell
@@ -25,9 +25,10 @@ gpg: encrypted with 2048-bit RSA key, ID 0123456789ABCDEF, created 2020-10-06
 aws access id AKIA0123456789ABCDEF
 aws secret key secret-string
 ```
+  - set these secrets at the top of `boot_ubuntu18.sh`
 
 3. Execute `sudo bash boot_ubuntu18.sh`
    - change to the `boot_scripts` directory.
-   - for extra verbosity, use the `-x` bash flag
+   - for extra script verbosity, use the `-x` bash flag
 
 4. Instance setup is complete. You are now ready to configure data connectors.
