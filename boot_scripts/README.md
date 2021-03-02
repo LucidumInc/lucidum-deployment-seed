@@ -25,7 +25,7 @@ gpg: encrypted with 2048-bit RSA key, ID 0123456789ABCDEF, created 2020-10-06
 aws access id AKIA0123456789ABCDEF
 aws secret key secret-string
 ```
-  - set these secrets at the top of `boot_ubuntu18.sh`
+   - set these secrets at the top of `boot_ubuntu18.sh`
 
 3. Execute `sudo bash boot_ubuntu18.sh`
    - change to the `boot_scripts` directory.
