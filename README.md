@@ -3,11 +3,15 @@
 
 This repository contains the necessary code to boot Lucidum product accross multiple cloud providers.
 
-`amazon_aws` provides code to boot on amazon cloud
+`amazon_aws_community` provides code to boot Community version on Amazon cloud
+
+`amazon_aws_enterprise` provides code to boot Enterprise version on Amazon cloud
 
 `google_compute` provides code to boot on google cloud
 
 `microsoft_azure` provides code to boot on microsoft cloud
+
+`boot_scripts` used by Terraform / Cloudformation / On-Premises (VMware, OpenStack, etc) 
 
 
 ### AWS cross account assume role
