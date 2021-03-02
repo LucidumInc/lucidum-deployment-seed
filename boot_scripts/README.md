@@ -31,6 +31,8 @@ aws secret key secret-string
    - change to the `boot_scripts` directory.
    - for extra script verbosity, use the `-x` bash flag
 ```shell
+$ sudo bash -x boot_ubuntu18.sh
+...
 5 features passed, 0 failed, 0 skipped
 6 scenarios passed, 0 failed, 0 skipped
 25 steps passed, 0 failed, 0 skipped, 0 undefined
