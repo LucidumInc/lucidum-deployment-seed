@@ -3,20 +3,20 @@
 
 This repository contains the necessary code to boot Lucidum product across multiple cloud providers.
 
-[a relative link](amazon_aws_community/README.md) `amazon_aws_community` provides code to boot Community Lucidum version on Amazon cloud
+[amazon_aws_community](amazon_aws_community/README.md) Code to boot Community Lucidum version on Amazon cloud
 
-[a relative link](amazon_aws_enterprise/README.md) `amazon_aws_enterprise` provides code to boot Enterprise Lucidum version on Amazon cloud
+[amazon_aws_enterprise](amazon_aws_enterprise/README.md) Code to boot Enterprise Lucidum version on Amazon cloud
 
-[a relative link](google_compute/README.md) `google_compute` provides code to boot Enterprise Lucidum on Google cloud
+[google_compute](google_compute/README.md) Code to boot Enterprise Lucidum on Google cloud
 
-[a relative link](microsoft_azure/README.md) `microsoft_azure` provides code to boot Enterprise Lucidum on Microsoft cloud
+[microsoft_azure](microsoft_azure/README.md) Code to boot Enterprise Lucidum on Microsoft cloud
 
-[a relative link](boot_scripts/README.md) `boot_scripts` used by Terraform / Cloudformation / On-Premises (VMware, OpenStack, etc) 
+[boot_scripts](boot_scripts/README.md) Scripts used by Terraform / Cloudformation / On-Premises (VMware, OpenStack, etc) 
 
 
 ### AWS cross account assume role
 
-[a relative link](x_account_assume_role/README.MD) `x_account_assume_role` directory for sub-account stack execution.
+[x_account_assume_role](x_account_assume_role/README.MD) directory for sub-account stack execution.
 
 - Terraform and Cloudformation support in `x_account_assume_role` subdirectory
   * Role is created in subaccounts with proper IAM Role and Policy
