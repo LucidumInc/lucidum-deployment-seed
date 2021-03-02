@@ -16,7 +16,7 @@ This repository contains the necessary code to boot Lucidum product across multi
 
 ### AWS cross account assume role
 
-[x_account_assume_role](x_account_assume_role/README.MD) directory for sub-account stack execution.
+[x_account_assume_role](x_account_assume_role/README.md) directory for sub-account stack execution.
 
 - Terraform and Cloudformation support in `x_account_assume_role` subdirectory
   * Role is created in subaccounts with proper IAM Role and Policy
