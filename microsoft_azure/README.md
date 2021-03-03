@@ -3,7 +3,7 @@
 To bring up the Lucidum stack on Microsoft Azure:
 
   0. Log into Azure CLI
-     - Install Azuri CLI https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+     - Install Azure CLI https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
      - Execute `az login`
 
   1. Replace `azure.pub` with authorized public key for use by vm
