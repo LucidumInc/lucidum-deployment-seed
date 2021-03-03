@@ -16,6 +16,8 @@
    - Hashicorp provides precompiled Go executables for Terraform
 
 4. Configure amazon cloud credentials https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
+   - install python `awscli` package (rpm/deb/pip/venv)
+   - configure awscli default profile `aws configure`
    - awscli default profile should be set to account to deploy Lucidum
    - awscli profile can be overriden in Terraform variables for advanced users
 
