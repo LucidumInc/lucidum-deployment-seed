@@ -7,6 +7,7 @@
      You can download GPG tools here: https://gnupg.org/
 
 1. Set variables in `terraform.tfvars`
+   - Clone this repo to your local workstation.
    - These are your AWS account specific values, such as vpc and subnet ids.
 
 2. Set Enterprise AWS Secrets in boot script `boot_ubuntu18.sh`
