@@ -10,7 +10,8 @@ To bring up the Lucidum stack on Microsoft Azure:
      - This is the public key, matching your private key used to ssh into vm
 
   2. Update variables in `terraform.tfvars`
-     - These are your AWS account specific values, such as vpc and subnet ids.
+     - These are your Azure specific values, such as instance size and deployment location
+     - `trusted_locations` must be set to your public IP
 
   3. Execute Terraform deployment
      - `terraform init`
@@ -20,7 +21,7 @@ To bring up the Lucidum stack on Microsoft Azure:
 
   5. Update secrets in install script `/var/lib/cloud/instance/scripts/part-001`
      - These are the customer specific encrypted secrets we will provide you
-     - We will provide you with these secrets as cyphertext asc file.
+     - We will provide you with these secrets as cyphertext asc file
      - Decrypt file with GPG tools `gpg --decrypt customer.asc`
 
   6. Execute install script `bash -ex /var/lib/cloud/instance/scripts/part-001`
