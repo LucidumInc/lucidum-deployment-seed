@@ -7,7 +7,7 @@ To bring up the Lucidum stack on Microsoft Azure:
      - Execute `az login`
 
   1. Replace `azure.pub` with authorized public key for use by vm
-     - This is the public key, matching your private key used to ssh into vm
+     - This is the public key, matching your private key used to ssh into vm (step #4)
 
   2. Update variables in `terraform.tfvars`
      - These are your Azure specific values, such as instance size and deployment location
