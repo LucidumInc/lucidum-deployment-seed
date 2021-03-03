@@ -10,7 +10,9 @@
    - These are your AWS account specific values, such as vpc and subnet ids.
 
 2. Set Enterprise AWS Secrets in boot script `boot_ubuntu18.sh`
-   - These are the customer specific encrypted secrets we provide you
+   - These are the customer specific encrypted secrets we will provide you
+   - We will provide you with these secrets as cyphertext asc file.
+   - Decrypt file with GPG tools `gpg --decrypt customer.asc`
 
 3. Download and install terraform https://www.terraform.io/downloads.html
    - Hashicorp provides precompiled Go executables for Terraform

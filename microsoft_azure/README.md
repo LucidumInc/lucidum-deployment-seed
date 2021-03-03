@@ -2,20 +2,29 @@
 
 To bring up the Lucidum stack on Microsoft Azure:
 
-  0. log into Azure CLI
+  0. Log into Azure CLI
+     - Install Azuri CLI https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+     - Execute `az login`
 
-  1. replace `azure.pub` with authorized public key for use by vm
+  1. Replace `azure.pub` with authorized public key for use by vm
+     - This is the public key, matching your private key used to ssh into vm
 
-  2. update variables in `terraform.tfvars`
+  2. Update variables in `terraform.tfvars`
+     - These are your AWS account specific values, such as vpc and subnet ids.
 
-  3. execute deployment `terraform init` and `terraform apply`
+  3. Execute Terraform deployment
+     - `terraform init`
+     - `terraform apply`
 
-  4. connect to instance `ssh -i /path/to/key ubuntu@{{ public_ip }}`
+  4. Connect to instance `ssh -i /path/to/private_key ubuntu@{{ public_ip }}`
 
-  5. update secrets in install script `/var/lib/cloud/instance/scripts/part-001`
+  5. Update secrets in install script `/var/lib/cloud/instance/scripts/part-001`
+     - These are the customer specific encrypted secrets we will provide you
+     - We will provide you with these secrets as cyphertext asc file.
+     - Decrypt file with GPG tools `gpg --decrypt customer.asc`
 
-  6. execute install script `bash -ex /var/lib/cloud/instance/scripts/part-001`
+  6. Execute install script `bash -ex /var/lib/cloud/instance/scripts/part-001`
 
-  * Azure Key Vault may be able automate secrets injection. (steps 3-5).
+  * Azure Key Vault may be able automate secrets injection. (steps 4-6).
   ** this may be similar to how Amazon does it with SSM ParameterStore,
-     IAM Instance Profile and Cloudinit integration.
+     IAM Instance Profile and EC2 Cloudinit integration.
