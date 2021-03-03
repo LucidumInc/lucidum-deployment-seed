@@ -1,7 +1,7 @@
 # lucidum-deployment-seed `amazon_aws_enterprise`
 
 
-0. Contact Lucidum Sales:\
+0. Contact Lucidum Sales:
    - Lucidum Enterprise AWS Secrets: needed to download containers from Lucidum AWS ECR\
      Provide us with your GPG public key and we will use it to encrypt and send you encrypted secrets\
      You can download GPG tools here: https://gnupg.org/
