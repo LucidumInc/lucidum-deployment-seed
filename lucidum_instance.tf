@@ -113,7 +113,7 @@ resource "aws_instance" "lucidum" {
   vpc_security_group_ids      = [ local.secgroup_id ]
   iam_instance_profile        = local.profile_name
   availability_zone           = var.availability_zone
-  user_data                   = file("./boot_scripts/boot_${var.playbook_edition}.sh")
+  user_data                   = file("${abspath(path.root)}/boot_scripts/boot_${var.playbook_edition}.sh")
 
   root_block_device {
     volume_size = 1000
