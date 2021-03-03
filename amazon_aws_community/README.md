@@ -16,11 +16,11 @@
    - awscli default profile should be set to account to deploy Lucidum
    - awscli profile can be overriden in Terraform variables for advanced users
 
-4. Execute `terraform init`
+4. Execute Terraform
+   - `terraform init`
+   - `terraform apply`
 
-5. Execute `terraform apply`
-
-6. Lucidum instance is up and ready with the default community edition data connectors.
+5. Lucidum instance is up and ready with the default community edition data connectors.
 
 
 ### AWS cross account assume role
