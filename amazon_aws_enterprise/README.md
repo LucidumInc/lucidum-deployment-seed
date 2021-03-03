@@ -17,7 +17,7 @@
    - We will provide you with these secrets as cyphertext asc file.
    - Decrypt file with GPG tools `gpg --decrypt customer.asc`
 
-4. Download and install terraform https://www.terraform.io/downloads.html
+4. Download and install terraform https://www.terraform.io/downloads.html (if not installed)
    - Hashicorp provides precompiled Go executables for Terraform
 
 5. Configure amazon cloud credentials https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
