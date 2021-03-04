@@ -6,8 +6,10 @@ provider "aws" {
 locals {
   secgroup_id  = var.security_group_id != "" ? var.security_group_id : aws_security_group.lucidum[0].id
   profile_name = var.instance_profile_name != "" ? var.instance_profile_name : aws_iam_instance_profile.lucidum[0].name
-  lucidum_prefix = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}"
-  lucidum_env = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}-${var.environment}"
+  
+  lucidum_edition = var.playbook_edition == "enterprise" ? "ubuntu18" : var.playbook_edition
+  lucidum_prefix = "lucidum-${local.lucidum_edition}-edition-${var.playbook_version}"
+  lucidum_env = "lucidum-${local.lucidum_edition}-edition-${var.playbook_version}-${var.environment}"
 }
 
 data "aws_ami" "lucidum_ami" {
@@ -57,8 +59,8 @@ resource "aws_security_group_rule" "allow_ssh" {
 resource "aws_security_group_rule" "allow_api" {
   count             = var.security_group_id == "" && var.playbook_edition != "community" ? 1 : 0
   type              = "ingress"
-  to_port           = 5500
-  from_port         = 5501
+  from_port         = 5500
+  to_port           = 5501
   protocol          = "tcp"
   security_group_id = aws_security_group.lucidum[0].id
   cidr_blocks       = var.trusted_cidrs
@@ -113,7 +115,7 @@ resource "aws_instance" "lucidum" {
   vpc_security_group_ids      = [ local.secgroup_id ]
   iam_instance_profile        = local.profile_name
   availability_zone           = var.availability_zone
-  user_data                   = file("${abspath(path.root)}/boot_scripts/boot_${var.playbook_edition}.sh")
+  user_data                   = file("${abspath(path.root)}/../boot_scripts/boot_${local.lucidum_edition}.sh")
 
   root_block_device {
     volume_size = 1000

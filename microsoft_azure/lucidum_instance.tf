@@ -65,7 +65,7 @@ resource "azurerm_linux_virtual_machine" "lucidum_deploy" {
   size                  = var.instance_size
   admin_username        = var.instance_user
   network_interface_ids = [ azurerm_network_interface.lucidum_deploy.id ]
-  custom_data           = base64encode(file("${abspath(path.root)}/boot_scripts/boot_ubuntu18.sh"))
+  custom_data           = base64encode(file("${abspath(path.root)}/../boot_scripts/boot_ubuntu18.sh"))
 
   admin_ssh_key {
     username = var.instance_user
