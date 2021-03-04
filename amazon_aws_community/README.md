@@ -24,7 +24,6 @@
    - `terraform apply`
 
 6. Lucidum instance is up and ready with the default community edition data connectors.
->>>>>>> more readme
 
 
 ### AWS cross account assume role

@@ -16,16 +16,16 @@ instance_size = "t3.2xlarge"        # Your EC2 instance type: change as needed, 
 
 associate_public_ip_address = true  # Whether to associate a public IP address with your EC2 instance: change as needed   
 
-subnet_id = "subnet-12345678"       # Your AWS subnet ID: change as needed (make sure the subnet is within the availability zone)
+subnet_id = "subnet-0123456789abcdef0"       # Your AWS subnet ID: change as needed (make sure the subnet is within the availability zone)
 
-vpc_id = "vpc-12345678"             # Your AWS VPC ID: change as needed
+vpc_id = "vpc-0123456789abcdef0"             # Your AWS VPC ID: change as needed
 
 trusted_cidrs = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12" ]   # Your trusted CIDR IP address ranges for accessing the EC2 instance: change as needed (make sure your computer's IP address is within the IP ranges to access the EC2 instance)
 
-aws_profile = "default"             # Your main AWS account’s named profile: change as needed (EC2 will be created using this profile)
-
 
 # optional overrides
+
+#aws_profile = ""
 
 #key_name = ""
 
