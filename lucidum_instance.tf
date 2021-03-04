@@ -9,7 +9,7 @@ locals {
   
   lucidum_edition = var.playbook_edition == "enterprise" ? "ubuntu18" : var.playbook_edition
   lucidum_prefix = "lucidum-${local.lucidum_edition}-edition-${var.playbook_version}"
-  lucidum_env = "lucidum-${local.lucidum_edition}-edition-${var.playbook_version}-${var.environment}"
+  lucidum_env = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}-${var.environment}"
 }
 
 data "aws_ami" "lucidum_ami" {
