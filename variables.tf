@@ -29,7 +29,8 @@ variable "vpc_id" {
 }
 
 variable "trusted_cidrs" {
-  type = list
+  type    = list
+  default = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12" ]
 }
 
 variable "playbook_version" {
