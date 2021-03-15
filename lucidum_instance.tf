@@ -9,7 +9,7 @@ locals {
   lucidum_edition    = var.playbook_edition == "enterprise" ? "ubuntu18" : var.playbook_edition
   lucidum_prefix     = "lucidum-${local.lucidum_edition}-edition-${var.playbook_version}"
   lucidum_version    = "lucidum-${var.playbook_edition}-${var.playbook_version}"
-  lucidum_deployment = "lucidum-${var.playbook_edition}-${var.environment}"
+  lucidum_deployment = "lucidum-${var.playbook_edition}-${var.playbook_version}-${var.environment}"
   lucidum_env        = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}-${var.environment}"
 }
 
