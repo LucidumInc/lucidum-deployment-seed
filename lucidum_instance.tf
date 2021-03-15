@@ -4,13 +4,13 @@ provider "aws" {
 }
 
 locals {
-  secgroup_id  = var.security_group_id != "" ? var.security_group_id : aws_security_group.lucidum[0].id
-  profile_name = var.instance_profile_name != "" ? var.instance_profile_name : aws_iam_instance_profile.lucidum[0].name
-  
-  lucidum_edition = var.playbook_edition == "enterprise" ? "ubuntu18" : var.playbook_edition
-  lucidum_prefix = "lucidum-${local.lucidum_edition}-edition-${var.playbook_version}"
-  lucidum_version = "lucidum-${var.playbook_edition}-${var.playbook_version}"
-  lucidum_env = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}-${var.environment}"
+  secgroup_id        = var.security_group_id != "" ? var.security_group_id : aws_security_group.lucidum[0].id
+  profile_name       = var.instance_profile_name != "" ? var.instance_profile_name : aws_iam_instance_profile.lucidum[0].name
+  lucidum_edition    = var.playbook_edition == "enterprise" ? "ubuntu18" : var.playbook_edition
+  lucidum_prefix     = "lucidum-${local.lucidum_edition}-edition-${var.playbook_version}"
+  lucidum_version    = "lucidum-${var.playbook_edition}-${var.playbook_version}"
+  lucidum_deployment = "lucidum-${var.playbook_edition}-${var.environment}"
+  lucidum_env        = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}-${var.environment}"
 }
 
 data "aws_ami" "lucidum_ami" {
@@ -183,7 +183,7 @@ resource "aws_iam_role_policy" "lucidum" {
 
 resource "aws_dynamodb_table" "kinesis_dynamodb" {
   count          = var.kinesis_table ? 1 : 0
-  name           = local.lucidum_version
+  name           = local.lucidum_deployment
   billing_mode   = "PROVISIONED"
   read_capacity  = 20
   write_capacity = 20
@@ -200,7 +200,8 @@ resource "aws_dynamodb_table" "kinesis_dynamodb" {
   }
 
   tags = {
-    Name        = local.lucidum_version
+    Name        = local.lucidum_deployment
+    Version     = local.lucidum_version
     Environment = var.environment
   }
 }
