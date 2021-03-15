@@ -9,6 +9,7 @@ locals {
   
   lucidum_edition = var.playbook_edition == "enterprise" ? "ubuntu18" : var.playbook_edition
   lucidum_prefix = "lucidum-${local.lucidum_edition}-edition-${var.playbook_version}"
+  lucidum_version = "lucidum-${var.playbook_edition}-${var.playbook_version}"
   lucidum_env = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}-${var.environment}"
 }
 
@@ -178,6 +179,29 @@ resource "aws_iam_role_policy" "lucidum" {
   name   = local.lucidum_env
   role   = aws_iam_role.lucidum[0].name
   policy = file("../x_account_assume_role/lucidum_assume_role_policy.json")
+}
+
+resource "aws_dynamodb_table" "kinesis_dynamodb" {
+  name           = local.lucidum_version
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 20
+  write_capacity = 20
+  hash_key       = "shard"
+
+  attribute {
+    name = "shard"
+    type = "S"
+  }
+
+  ttl {
+    attribute_name = "TimeToExist"
+    enabled        = false
+  }
+
+  tags = {
+    Name        = local.lucidum_version
+    Environment = var.environment
+  }
 }
 
 output "lucidum_instance_private_ip" {
