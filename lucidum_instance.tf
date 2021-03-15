@@ -182,6 +182,7 @@ resource "aws_iam_role_policy" "lucidum" {
 }
 
 resource "aws_dynamodb_table" "kinesis_dynamodb" {
+  count          = var.kinesis_table ? 1 : 0
   name           = local.lucidum_version
   billing_mode   = "PROVISIONED"
   read_capacity  = 20

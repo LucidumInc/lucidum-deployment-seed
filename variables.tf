@@ -83,7 +83,7 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "kenisis" {
+variable "kinesis" {
   type    = bool
   default = false
 }
