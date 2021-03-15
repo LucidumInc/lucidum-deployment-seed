@@ -38,3 +38,5 @@ trusted_cidrs = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12" ]   # Your tru
 #lucidum_ami_id = ""
 
 #data_ebs_volume = ""
+
+#kinesis_table = ""

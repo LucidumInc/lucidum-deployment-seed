@@ -84,7 +84,7 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "kinesis" {
+variable "kinesis_table" {
   type    = bool
   default = false
 }
