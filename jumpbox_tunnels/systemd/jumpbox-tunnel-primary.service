@@ -1,0 +1,15 @@
+[Unit]
+Description=Lucidum Jumpbox Tunnel Service Primary
+After=network.target
+
+[Service]
+Environment=CUSTOMER_PORT=3001
+Environment=LUCIDUM_JUMPBOX=jumpbox1.lucidum.io
+ExecStart=/usr/bin/ssh -NT -o ServerAliveInterval=60 -o ExitOnForwardFailure=yes -R $CUSTOMER_PORT:localhost:22 ec2-user@$LUCIDUM_JUMPBOX
+StandardOutput=journal
+User=ec2-user
+RestartSec=5
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
