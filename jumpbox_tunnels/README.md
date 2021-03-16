@@ -8,7 +8,7 @@ SystemD initialization scripts allow customers to create persistent reverse ssh 
   3. Copy two SystemD units into `/etc/systemd/system`
   4. Enable services:\
      `systemctl enable lucidum-jumpbox-primary`\
-      `systemctl enable lucidum-jumpbox-secondary`
+     `systemctl enable lucidum-jumpbox-secondary`
   5. Start services:\
      `systemctl start lucidum-jumpbox-primary`\
      `systemctl start lucidum-jumpbox-secondary`
