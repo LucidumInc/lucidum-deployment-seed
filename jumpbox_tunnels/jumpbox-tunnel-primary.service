@@ -4,10 +4,10 @@ After=network.target
 
 [Service]
 User=ubuntu
-Environment=CUSTOMER_PORT=3001
-Environment=CUSTOMER_USER=customer
+Environment=CUSTOMER_PORT=[CUSTOMER_PORT]
+Environment=CUSTOMER_NAME=[CUSTOMER_NAME]
 Environment=LUCIDUM_JUMPBOX=jumpbox1.lucidum.io
-ExecStart=/usr/bin/ssh -NT -o ServerAliveInterval=60 -o ExitOnForwardFailure=yes -R ${CUSTOMER_PORT}:localhost:22 ${CUSTOMER_USER}@${LUCIDUM_JUMPBOX}
+ExecStart=/usr/bin/ssh -NT -o ServerAliveInterval=60 -o ExitOnForwardFailure=yes -R ${CUSTOMER_PORT}:localhost:22 ${CUSTOMER_NAME}@${LUCIDUM_JUMPBOX}
 StandardOutput=journal
 RestartSec=5
 Restart=always
