@@ -7,7 +7,7 @@ SystemD initialization scripts allow customers to create persistent reverse ssh 
      Do not add a passphrase, as these connections will not be interactive.
   2. Provide us with the Public IP your connection will be coming from. \
      We will need to whitelist your IP address in our firewalls.
-  3. Append the SSH Public Key we provide to the `ubuntu` user's authorized keys.\
+  3. We will provide you with an SSH Public Key to add to the `ubuntu` user's authorized keys.\
      This is different from the SSH Public Key you provide us, and is appended to:\
      `/home/ubuntu/.ssh/authorized_keys`
   4. Copy two SystemD unit files to SystemD configuration directory.\
