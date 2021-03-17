@@ -15,9 +15,11 @@ SystemD initialization scripts allow customers to create persistent reverse ssh 
      `cp -v lucidum-jumpbox-secondary.service /etc/systemd/system/lucidum-jumpbox-secondary.service`
   5. Update `CUSTOMER_NAME` and `CUSTOMER_PORT` in the two unit files.\
      These values will be provided to you directly.
-  6. Enable services:\
+  6. Update `SYSTEM_USER` in the two unit files.\
+     This will be `ubuntu`, `centos`, or `ec2-user` depending on your linux distribution.
+  7. Enable services:\
      `systemctl enable lucidum-jumpbox-primary`\
      `systemctl enable lucidum-jumpbox-secondary`
-  7. Start services:\
+  8. Start services:\
      `systemctl start lucidum-jumpbox-primary`\
      `systemctl start lucidum-jumpbox-secondary`

@@ -3,7 +3,7 @@ Description=Lucidum Jumpbox Tunnel Service Primary
 After=network.target
 
 [Service]
-User=ubuntu
+User=[SYSTEM_USER]
 Environment=CUSTOMER_PORT=[CUSTOMER_PORT]
 Environment=CUSTOMER_NAME=[CUSTOMER_NAME]
 Environment=LUCIDUM_JUMPBOX=jumpbox1.lucidum.io
