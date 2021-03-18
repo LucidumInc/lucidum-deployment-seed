@@ -28,6 +28,11 @@ variable "vpc_id" {
   type = string
 }
 
+variable "key_name" {
+  type = string
+  default = ""
+}
+
 variable "trusted_cidrs" {
   type    = list
   default = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12" ]
@@ -43,11 +48,6 @@ variable "playbook_edition" {
 
 
 # optional overrides
-
-variable "key_name" {
-  type = string
-  default = ""
-}
 
 variable "security_group_id" {
   type    = string
