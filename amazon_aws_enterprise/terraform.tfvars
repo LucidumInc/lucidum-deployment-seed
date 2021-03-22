@@ -10,7 +10,7 @@ availability_zone = "us-west-1b"    # Your AWS availability zone: change as need
 
 aws_region = "us-west-1"            # Your AWS region: change as needed
 
-instance_size = "t3.2xlarge"        # Your EC2 instance type: change as needed, t3.2xlarge is recommended
+instance_size = "r5.4xlarge"        # Your EC2 instance type: change as needed, t3.2xlarge is recommended
 
 environment = "prod"                # Your AWS environment: change as needed
 
