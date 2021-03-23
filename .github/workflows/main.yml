@@ -26,6 +26,21 @@ jobs:
           echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
       - name: terraform plan
         run: terraform plan
+        env:
+          TF_VAR_associate_public_ip_address: false
+          #{ "name"="ENVIRONMENT", "type"="PLAINTEXT", "value"="dev" },
+          #{ "name"="AWS_REGION", "type"="PLAINTEXT", "value"=var.aws_region },
+          #{ "name"="TERRAFORM_VERSION", "type"="PLAINTEXT", "value"=var.terraform_version },
+          #{ "name"="LUCIDUM_DEPLOY", "type"="PLAINTEXT", "value"=var.lucidum_deploy_repo },
+          #{ "name"="PLAYBOOK_EDITION", "type"="PLAINTEXT", "value"="ubuntu18" },
+          #{ "name"="PLAYBOOK_VERSION", "type"="PLAINTEXT", "value"=var.playbook_version },
+          #{ "name"="AVAILABILITY_ZONE", "type"="PLAINTEXT", "value"=var.availability_zone },
+          #{ "name"="SOURCE_AMI_ACCOUNT_NUMBER", "type"="PLAINTEXT", "value"=var.source_ami_account_number },
+          #{ "name"="INSTANCE_SIZE", "type"="PLAINTEXT", "value"=var.instance_size },
+          #{ "name"="SUBNET_ID", "type"="PLAINTEXT", "value"=var.subnet_ids[0] },
+          #{ "name"="VPC_ID", "type"="PLAINTEXT", "value"=var.vpc_id },
+          #{ "name"="KEY_NAME", "type"="PLAINTEXT", "value"=var.key_name },
+
 
       - name: terraform apply
         run: echo terraform apply
