@@ -1,0 +1,34 @@
+name: lucidum-deployment-seed continuous integration
+
+on: [ push, pull_request ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-18.04 ]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: set up terraform ${{ matrix.os }}
+        uses: hashicorp/setup-terraform@v1.0.1
+
+      - name: lint
+        run: echo lint
+
+      - name: aws creds
+        run: |
+          mkdir -vp ~/.aws
+          echo "[default]" > ~/.aws/credentials
+          echo "aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
+          echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+      - name: terraform plan
+        run: terraform plan
+
+      - name: terraform apply
+        run: echo terraform apply
+
+      - name: publish to slack
+        run: echo publish ci job to slack
