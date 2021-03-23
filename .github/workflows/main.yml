@@ -5,16 +5,13 @@ on: [ push, pull_request ]
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-
     strategy:
       fail-fast: false
       matrix:
         os: [ ubuntu-18.04 ]
-
     defaults:
       run:
         working-directory: ${{ env.tf_actions_working_dir }}
-      
     steps:
       - uses: actions/checkout@v2
 
