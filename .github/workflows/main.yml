@@ -32,23 +32,29 @@ jobs:
         run: terraform init 
         id: init
 
+      - name: make symbolic link
+        run: |
+          mkdir -pv ../x_account_assume_role
+          ln -sfv x_account_assume_role/lucidum_assume_role_policy.json ../x_account_assume_role/
+
       - name: terraform plan
         run: terraform plan
         id: plan
-        env:
-          TF_VAR_associate_public_ip_address: false
-          TF_VAR_environment: "gha-ci"
-          TF_VAR_aws_region: "us-west-1"
-          TF_VAR_terraform_version: "0.14.8"
-          TF_VAR_lucidum_deploy: "lucidum-deployment-seed"
-          TF_VAR_playbook_edition: "community"
-          TF_VAR_playbook_version: "v1.0.0"
-          TF_VAR_availability_zone: "us-west-1b"
-          TF_VAR_instance_size: "t3.large"
-          TF_VAR_key_name: "gha-ci-test"
-          TF_VAR_subnet_id: "subnet-12345678"
-          TF_VAR_vpc_id: "vpc-12345678"
-          TF_VAR_source_ami_account_number: "308025194586"
+        working-directory: amazon_aws_community
+        #env:
+        #  TF_VAR_associate_public_ip_address: false
+        #  TF_VAR_environment: "gha-ci"
+        #  TF_VAR_aws_region: "us-west-1"
+        #  TF_VAR_terraform_version: "0.14.8"
+        #  TF_VAR_lucidum_deploy: "lucidum-deployment-seed"
+        #  TF_VAR_playbook_edition: "community"
+        #  TF_VAR_playbook_version: "v1.0.0"
+        #  TF_VAR_availability_zone: "us-west-1b"
+        #  TF_VAR_instance_size: "t3.large"
+        #  TF_VAR_key_name: "gha-ci-test"
+        #  TF_VAR_subnet_id: "subnet-12345678"
+        #  TF_VAR_vpc_id: "vpc-12345678"
+        #  TF_VAR_source_ami_account_number: "308025194586"
 
       - name: trigger codebuild lucidum-deployment-pipelines
         run: echo trigger codebuild lucidum-deployment-pipelines
