@@ -5,13 +5,15 @@ on: [ push, pull_request ]
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+
     strategy:
       fail-fast: false
       matrix:
         os: [ ubuntu-18.04 ]
+
     defaults:
       run:
-        working-directory: ${{ env.tf_actions_working_dir }}/amazon_aws_community
+        working-directory: ${{ env.tf_actions_working_dir }}
       
     steps:
       - uses: actions/checkout@v2
@@ -34,27 +36,25 @@ jobs:
 
       - name: terraform init
         run: terraform init 
-        working-directory: ${{ env.tf_actions_working_dir }}
         id: init
 
       - name: terraform plan
         run: terraform plan
-        working-directory: ${{ env.tf_actions_working_dir }}/amazon_aws_community
         id: plan
-        #env:
-        #  TF_VAR_associate_public_ip_address: false
-        #  TF_VAR_environment: "gha-ci"
-        #  TF_VAR_aws_region: "us-west-1"
-        #  TF_VAR_terraform_version: "0.14.8"
-        #  TF_VAR_lucidum_deploy: "lucidum-deployment-seed"
-        #  TF_VAR_playbook_edition: "community"
-        #  TF_VAR_playbook_version: "v1.0.0"
-        #  TF_VAR_availability_zone: "us-west-1b"
-        #  TF_VAR_instance_size: "t3.large"
-        #  TF_VAR_key_name: "gha-ci-test"
-        #  TF_VAR_subnet_id: "subnet-12345678"
-        #  TF_VAR_vpc_id: "vpc-12345678"
-        #  TF_VAR_source_ami_account_number: "308025194586"
+        env:
+          TF_VAR_associate_public_ip_address: false
+          TF_VAR_environment: "gha-ci"
+          TF_VAR_aws_region: "us-west-1"
+          TF_VAR_terraform_version: "0.14.8"
+          TF_VAR_lucidum_deploy: "lucidum-deployment-seed"
+          TF_VAR_playbook_edition: "community"
+          TF_VAR_playbook_version: "v1.0.0"
+          TF_VAR_availability_zone: "us-west-1b"
+          TF_VAR_instance_size: "t3.large"
+          TF_VAR_key_name: "gha-ci-test"
+          TF_VAR_subnet_id: "subnet-12345678"
+          TF_VAR_vpc_id: "vpc-12345678"
+          TF_VAR_source_ami_account_number: "308025194586"
 
       - name: trigger codebuild lucidum-deployment-pipelines
         run: echo trigger codebuild lucidum-deployment-pipelines
