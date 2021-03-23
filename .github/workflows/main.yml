@@ -40,18 +40,18 @@ jobs:
         id: plan
         env:
           TF_VAR_associate_public_ip_address: false
-          #{ "name"="ENVIRONMENT", "type"="PLAINTEXT", "value"="dev" },
-          #{ "name"="AWS_REGION", "type"="PLAINTEXT", "value"=var.aws_region },
-          #{ "name"="TERRAFORM_VERSION", "type"="PLAINTEXT", "value"=var.terraform_version },
-          #{ "name"="LUCIDUM_DEPLOY", "type"="PLAINTEXT", "value"=var.lucidum_deploy_repo },
-          #{ "name"="PLAYBOOK_EDITION", "type"="PLAINTEXT", "value"="ubuntu18" },
-          #{ "name"="PLAYBOOK_VERSION", "type"="PLAINTEXT", "value"=var.playbook_version },
-          #{ "name"="AVAILABILITY_ZONE", "type"="PLAINTEXT", "value"=var.availability_zone },
-          #{ "name"="SOURCE_AMI_ACCOUNT_NUMBER", "type"="PLAINTEXT", "value"=var.source_ami_account_number },
-          #{ "name"="INSTANCE_SIZE", "type"="PLAINTEXT", "value"=var.instance_size },
-          #{ "name"="SUBNET_ID", "type"="PLAINTEXT", "value"=var.subnet_ids[0] },
-          #{ "name"="VPC_ID", "type"="PLAINTEXT", "value"=var.vpc_id },
-          #{ "name"="KEY_NAME", "type"="PLAINTEXT", "value"=var.key_name },
+          TF_VAR_environment: "gha-ci"
+          TF_VAR_aws_region: "us-west-1"
+          TF_VAR_terraform_version: "0.14.8"
+          TF_VAR_lucidum_deploy: "lucidum-deployment-seed"
+          TF_VAR_playbook_edition: "community"
+          TF_VAR_playbook_version: "v1.0.0"
+          TF_VAR_availability_zone: "us-west-1b"
+          TF_VAR_instance_size: "t3.large"
+          TF_VAR_key_name: "gha-ci-test"
+          TF_VAR_subnet_id: "subnet-12345678"
+          TF_VAR_vpc_id: "vpc-12345678"
+          TF_VAR_source_ami_account_number: "308025194586"
 
       - name: trigger codebuild lucidum-deployment-pipelines
         run: echo trigger codebuild lucidum-deployment-pipelines
