@@ -35,11 +35,6 @@ jobs:
         run: terraform init 
         id: init
 
-      #- name: make symbolic link
-      #  run: |
-      #    mkdir -pv ../x_account_assume_role
-      #    ln -sfv x_account_assume_role/lucidum_assume_role_policy.json ../x_account_assume_role/
-
       - name: terraform plan
         run: terraform plan
         id: plan
