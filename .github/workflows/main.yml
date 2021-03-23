@@ -13,10 +13,14 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: set up terraform ${{ matrix.os }}
-        uses: hashicorp/setup-terraform@v1.2.1
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_wrapper: false
 
-      - name: lint
-        run: echo lint
+      - name: terraform fmt check
+        run: terraform fmt -check
+        working-directory: ${{ env.tf_actions_working_dir }}
+        id: fmt
 
       - name: aws creds
         run: |
@@ -24,8 +28,16 @@ jobs:
           echo "[default]" > ~/.aws/credentials
           echo "aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
           echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+
+      - name: terraform init
+        run: terraform init 
+        working-directory: ${{ env.tf_actions_working_dir }}
+        id: init
+
       - name: terraform plan
         run: terraform plan
+        working-directory: ${{ env.tf_actions_working_dir }}
+        id: plan
         env:
           TF_VAR_associate_public_ip_address: false
           #{ "name"="ENVIRONMENT", "type"="PLAINTEXT", "value"="dev" },
@@ -41,9 +53,8 @@ jobs:
           #{ "name"="VPC_ID", "type"="PLAINTEXT", "value"=var.vpc_id },
           #{ "name"="KEY_NAME", "type"="PLAINTEXT", "value"=var.key_name },
 
-
-      - name: terraform apply
-        run: echo terraform apply
+      - name: trigger codebuild lucidum-deployment-pipelines
+        run: echo trigger codebuild lucidum-deployment-pipelines
 
       - name: publish to slack
         run: echo publish ci job to slack
