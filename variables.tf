@@ -29,13 +29,13 @@ variable "vpc_id" {
 }
 
 variable "key_name" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "trusted_cidrs" {
-  type    = list
-  default = [ "10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12" ]
+  type    = list(any)
+  default = ["10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12"]
 }
 
 variable "playbook_version" {
@@ -89,7 +89,7 @@ variable "kinesis_table" {
   default = false
 }
 
- 
+
 # assume role vars
 
 variable "stack_name" {

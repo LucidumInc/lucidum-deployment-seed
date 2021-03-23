@@ -18,15 +18,15 @@ data "aws_ami" "lucidum_ami" {
 
   filter {
     name   = "name"
-    values = [ "${local.lucidum_prefix}*" ]
+    values = ["${local.lucidum_prefix}*"]
   }
 
   filter {
     name   = "virtualization-type"
-    values = [ "hvm" ]
+    values = ["hvm"]
   }
 
-  owners = [ var.source_ami_account_number ]
+  owners = [var.source_ami_account_number]
 }
 
 resource "aws_security_group" "lucidum" {
@@ -39,7 +39,7 @@ resource "aws_security_group" "lucidum" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = [ "0.0.0.0/0" ]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -113,7 +113,7 @@ resource "aws_instance" "lucidum" {
   key_name                    = var.key_name
   subnet_id                   = var.subnet_id
   associate_public_ip_address = var.associate_public_ip_address
-  vpc_security_group_ids      = [ local.secgroup_id ]
+  vpc_security_group_ids      = [local.secgroup_id]
   iam_instance_profile        = local.profile_name
   availability_zone           = var.availability_zone
   user_data                   = file("${abspath(path.root)}/../boot_scripts/boot_${local.lucidum_edition}.sh")
@@ -169,7 +169,7 @@ data "aws_iam_policy_document" "lucidum_assume_role" {
     actions = ["sts:AssumeRole"]
     principals {
       type        = "Service"
-      identifiers = [ "ec2.amazonaws.com" ]
+      identifiers = ["ec2.amazonaws.com"]
     }
   }
 }
