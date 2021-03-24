@@ -1,21 +1,21 @@
 variable "microsoft_location" {
-  type    = string
+  type = string
 }
 
 variable "environment" {
-  type    = string
+  type = string
 }
 
 variable "lucidum_cidr" {
-  type    = string
+  type = string
 }
 
 variable "instance_size" {
-  type    = string
+  type = string
 }
 
 variable "trusted_locations" {
-  type    = list
+  type = list(any)
 }
 
 variable "stack_name" {

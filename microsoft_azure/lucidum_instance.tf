@@ -1,5 +1,4 @@
 provider "azurerm" {
-  version = "=2.39.0"
   features {}
 }
 
@@ -19,7 +18,7 @@ resource "azurerm_virtual_network" "lucidum_deploy" {
   name                = var.stack_name
   resource_group_name = azurerm_resource_group.lucidum_deploy.name
   location            = azurerm_resource_group.lucidum_deploy.location
-  address_space       = [ var.lucidum_cidr ]
+  address_space       = [var.lucidum_cidr]
 }
 
 
@@ -27,7 +26,7 @@ resource "azurerm_subnet" "lucidum_deploy" {
   name                 = var.stack_name
   resource_group_name  = azurerm_resource_group.lucidum_deploy.name
   virtual_network_name = azurerm_virtual_network.lucidum_deploy.name
-  address_prefixes     = [ var.lucidum_cidr ]
+  address_prefixes     = [var.lucidum_cidr]
 }
 
 
@@ -64,11 +63,11 @@ resource "azurerm_linux_virtual_machine" "lucidum_deploy" {
   location              = azurerm_resource_group.lucidum_deploy.location
   size                  = var.instance_size
   admin_username        = var.instance_user
-  network_interface_ids = [ azurerm_network_interface.lucidum_deploy.id ]
+  network_interface_ids = [azurerm_network_interface.lucidum_deploy.id]
   custom_data           = base64encode(file("${abspath(path.root)}/../boot_scripts/boot_ubuntu18.sh"))
 
   admin_ssh_key {
-    username = var.instance_user
+    username   = var.instance_user
     public_key = file("azure.pub")
   }
 
