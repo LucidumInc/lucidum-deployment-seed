@@ -55,8 +55,13 @@ jobs:
         id: enterprise-plan
         working-directory: amazon_aws_enterprise
 
-      - name: trigger codebuild lucidum-deployment-pipelines
-        run: echo trigger codebuild lucidum-deployment-pipelines
+      - name: trigger codebuild lucidum-deployment-pipelines community
+        run: echo trigger codebuild lucidum-deployment-pipelines community
+
+      - name: trigger codebuild lucidum-deployment-pipelines enterprise
+        run: echo trigger codebuild lucidum-deployment-pipelines enterprise
 
       - name: publish to slack
-        run: echo publish ci job to slack
+        run: |
+          env
+          echo publish ci job to slack
