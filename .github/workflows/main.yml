@@ -10,9 +10,6 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-18.04 ]
-    defaults:
-      run:
-        working-directory: amazon_aws_community
     steps:
       - uses: actions/checkout@v2
 
@@ -21,10 +18,6 @@ jobs:
         with:
           terraform_wrapper: false
 
-      - name: terraform fmt check
-        run: terraform fmt -check
-        id: fmt
-
       - name: aws creds
         run: |
           mkdir -vp ~/.aws
@@ -32,13 +25,35 @@ jobs:
           echo "aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
           echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
 
-      - name: terraform init
-        run: terraform init 
-        id: init
+      - name: terraform community fmt check
+        run: terraform fmt -check
+        id: community-fmt
+        working-directory: amazon_aws_community
 
-      - name: terraform plan
+      - name: terraform community init
+        run: terraform init 
+        id: community-init
+        working-directory: amazon_aws_community
+
+      - name: terraform community plan
         run: terraform plan
-        id: plan
+        id: community-plan
+        working-directory: amazon_aws_community
+
+      - name: terraform enterprise fmt check
+        run: terraform fmt -check
+        id: enterprise-fmt
+        working-directory: amazon_aws_enterprise
+
+      - name: terraform enterprise init
+        run: terraform init
+        id: enterprise-init
+        working-directory: amazon_aws_enterprise
+
+      - name: terraform enterprise plan
+        run: terraform plan
+        id: enterprise-plan
+        working-directory: amazon_aws_enterprise
 
       - name: trigger codebuild lucidum-deployment-pipelines
         run: echo trigger codebuild lucidum-deployment-pipelines
