@@ -58,6 +58,7 @@ jobs:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+        continue-on-error: true
 
       - name: terraform enterprise azure fmt check
         run: terraform fmt -check
@@ -68,11 +69,13 @@ jobs:
         run: terraform init
         id: enterprise-azure-init
         working-directory: microsoft_azure
+        continue-on-error: true
 
       - name: terraform enterprise azure plan
         run: terraform plan
         id: enterprise-azure-plan
         working-directory: microsoft_azure
+        continue-on-error: true
 
       - name: trigger codebuild lucidum-deployment-pipelines community
         run: echo trigger codebuild lucidum-deployment-pipelines community
