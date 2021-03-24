@@ -40,20 +40,39 @@ jobs:
         id: community-plan
         working-directory: amazon_aws_community
 
-      - name: terraform enterprise fmt check
+      - name: terraform enterprise aws fmt check
         run: terraform fmt -check
-        id: enterprise-fmt
+        id: enterprise-aws-fmt
         working-directory: amazon_aws_enterprise
 
-      - name: terraform enterprise init
+      - name: terraform enterprise aws init
         run: terraform init
-        id: enterprise-init
+        id: enterprise-aws-init
         working-directory: amazon_aws_enterprise
 
-      - name: terraform enterprise plan
+      - name: terraform enterprise aws plan
         run: terraform plan
-        id: enterprise-plan
+        id: enterprise-aws-plan
         working-directory: amazon_aws_enterprise
+
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: terraform enterprise azure fmt check
+        run: terraform fmt -check
+        id: enterprise-azure-fmt
+        working-directory: microsoft_azure
+
+      - name: terraform enterprise azure init
+        run: terraform init
+        id: enterprise-azure-init
+        working-directory: microsoft_azure
+
+      - name: terraform enterprise azure plan
+        run: terraform plan
+        id: enterprise-azure-plan
+        working-directory: microsoft_azure
 
       - name: trigger codebuild lucidum-deployment-pipelines community
         run: echo trigger codebuild lucidum-deployment-pipelines community
