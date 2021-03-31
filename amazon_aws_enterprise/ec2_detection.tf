@@ -81,7 +81,7 @@ module "ec2_detection_us_east_1" {
   stack_prefix            = local.ec2_detect_prefix
   environment             = var.environment
   execution_role_arn      = aws_iam_role.ec2_detection[0].arn
-  providers               = {
+  providers = {
     aws = aws.us-east-1
   }
 }
@@ -93,7 +93,7 @@ module "ec2_detection_us_east_2" {
   stack_prefix            = local.ec2_detect_prefix
   environment             = var.environment
   execution_role_arn      = aws_iam_role.ec2_detection[0].arn
-  providers               = {
+  providers = {
     aws = aws.us-east-2
   }
 }
@@ -105,7 +105,7 @@ module "ec2_detection_us_west_1" {
   stack_prefix            = local.ec2_detect_prefix
   environment             = var.environment
   execution_role_arn      = aws_iam_role.ec2_detection[0].arn
-  providers               = {
+  providers = {
     aws = aws.us-west-1
   }
 }
@@ -117,7 +117,7 @@ module "ec2_detection_us_west_2" {
   stack_prefix            = local.ec2_detect_prefix
   environment             = var.environment
   execution_role_arn      = aws_iam_role.ec2_detection[0].arn
-  providers               = {
+  providers = {
     aws = aws.us-west-2
   }
 }
