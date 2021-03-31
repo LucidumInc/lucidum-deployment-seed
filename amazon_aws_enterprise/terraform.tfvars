@@ -57,4 +57,6 @@ playbook_edition = "enterprise"
 
 #data_ebs_volume = ""
 
-#kinesis_table = ""
+#kinesis_table = false
+
+#ec2_detection = false

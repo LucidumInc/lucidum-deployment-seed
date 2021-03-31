@@ -89,6 +89,16 @@ variable "kinesis_table" {
   default = false
 }
 
+variable "lambda_log_group_prefix" {
+  type    = string
+  default = "/aws/lambda/"
+}
+
+variable "ec2_detection" {
+  type    = bool
+  default = false
+}
+
 
 # assume role vars
 
