@@ -75,6 +75,7 @@ resource "aws_iam_role_policy_attachment" "ec2_detection" {
 }
 
 module "ec2_detection_us_east_1" {
+  count                   = var.ec2_detection ? 1 : 0
   source                  = "./lambda_functions/ec2_detection"
   ec2_detection           = var.ec2_detection
   lambda_log_group_prefix = var.lambda_log_group_prefix
@@ -87,6 +88,7 @@ module "ec2_detection_us_east_1" {
 }
 
 module "ec2_detection_us_east_2" {
+  count                   = var.ec2_detection ? 1 : 0
   source                  = "./lambda_functions/ec2_detection"
   ec2_detection           = var.ec2_detection
   lambda_log_group_prefix = var.lambda_log_group_prefix
@@ -99,6 +101,7 @@ module "ec2_detection_us_east_2" {
 }
 
 module "ec2_detection_us_west_1" {
+  count                   = var.ec2_detection ? 1 : 0
   source                  = "./lambda_functions/ec2_detection"
   ec2_detection           = var.ec2_detection
   lambda_log_group_prefix = var.lambda_log_group_prefix
@@ -111,6 +114,7 @@ module "ec2_detection_us_west_1" {
 }
 
 module "ec2_detection_us_west_2" {
+  count                   = var.ec2_detection ? 1 : 0
   source                  = "./lambda_functions/ec2_detection"
   ec2_detection           = var.ec2_detection
   lambda_log_group_prefix = var.lambda_log_group_prefix
