@@ -1,4 +1,4 @@
-name: lucidum-deployment-seed continuous integration azure
+name: lucidum-deployment-seed azure
 
 on: [ push, pull_request ]
 

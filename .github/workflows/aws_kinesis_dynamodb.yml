@@ -1,4 +1,4 @@
-name: lucidum-deployment-seed continuous integration kinesis_dynamodb
+name: lucidum-deployment-seed kinesis_dynamodb
 
 on: [ push, pull_request ]
 

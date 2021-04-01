@@ -1,4 +1,4 @@
-name: lucidum-deployment-seed continuous integration community
+name: lucidum-deployment-seed community
 
 on: [ push, pull_request ]
 

@@ -1,4 +1,4 @@
-name: lucidum-deployment-seed continuous integration ubuntu18
+name: lucidum-deployment-seed ubuntu18
 
 on: [ push, pull_request ]
 

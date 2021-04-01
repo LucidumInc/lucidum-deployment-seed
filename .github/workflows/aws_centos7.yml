@@ -1,4 +1,4 @@
-name: lucidum-deployment-seed continuous integration centos7
+name: lucidum-deployment-seed centos7
 
 on: [ push, pull_request ]
 
