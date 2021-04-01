@@ -7,7 +7,7 @@ jobs:
     environment: gha-ci
     runs-on: ${{ matrix.os }}
     env:
-      TF_VAR_kinesis_dynamodb: true
+      TF_VAR_kinesis_table: true
     strategy:
       fail-fast: false
       matrix:
