@@ -1,4 +1,4 @@
-name: lucidum-deployment-seed azure
+name: azure
 
 on: [ push, pull_request ]
 
