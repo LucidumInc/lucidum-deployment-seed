@@ -1,23 +1,3 @@
-provider "aws" {
-  alias  = "us-west-1"
-  region = "us-west-1"
-}
-
-provider "aws" {
-  alias  = "us-west-2"
-  region = "us-west-2"
-}
-
-provider "aws" {
-  alias  = "us-east-1"
-  region = "us-east-1"
-}
-
-provider "aws" {
-  alias  = "us-east-2"
-  region = "us-east-2"
-}
-
 locals {
   ec2_detect_prefix = "lucidum-ec2-detection-${var.environment}"
 }
@@ -74,14 +54,25 @@ resource "aws_iam_role_policy_attachment" "ec2_detection" {
   policy_arn = aws_iam_policy.ec2_detection[0].arn
 }
 
+resource "aws_s3_bucket" "ec2_detection" {
+  count         = var.ec2_detection ? 1 : 0
+  bucket_prefix = "${local.ec2_detect_prefix}-"
+  acl           = "private"
+
+  tags = {
+    Name        = local.ec2_detect_prefix
+    Environment = var.environment
+  }
+}
+
 module "ec2_detection_us_east_1" {
   count                   = var.ec2_detection ? 1 : 0
   source                  = "./lambda_functions/ec2_detection"
-  ec2_detection           = var.ec2_detection
   lambda_log_group_prefix = var.lambda_log_group_prefix
   stack_prefix            = local.ec2_detect_prefix
   environment             = var.environment
   execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
   providers = {
     aws = aws.us-east-1
   }
@@ -90,11 +81,11 @@ module "ec2_detection_us_east_1" {
 module "ec2_detection_us_east_2" {
   count                   = var.ec2_detection ? 1 : 0
   source                  = "./lambda_functions/ec2_detection"
-  ec2_detection           = var.ec2_detection
   lambda_log_group_prefix = var.lambda_log_group_prefix
   stack_prefix            = local.ec2_detect_prefix
   environment             = var.environment
   execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
   providers = {
     aws = aws.us-east-2
   }
@@ -103,11 +94,11 @@ module "ec2_detection_us_east_2" {
 module "ec2_detection_us_west_1" {
   count                   = var.ec2_detection ? 1 : 0
   source                  = "./lambda_functions/ec2_detection"
-  ec2_detection           = var.ec2_detection
   lambda_log_group_prefix = var.lambda_log_group_prefix
   stack_prefix            = local.ec2_detect_prefix
   environment             = var.environment
   execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
   providers = {
     aws = aws.us-west-1
   }
@@ -116,12 +107,168 @@ module "ec2_detection_us_west_1" {
 module "ec2_detection_us_west_2" {
   count                   = var.ec2_detection ? 1 : 0
   source                  = "./lambda_functions/ec2_detection"
-  ec2_detection           = var.ec2_detection
   lambda_log_group_prefix = var.lambda_log_group_prefix
   stack_prefix            = local.ec2_detect_prefix
   environment             = var.environment
   execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
   providers = {
     aws = aws.us-west-2
+  }
+}
+
+module "ec2_detection_ca_central_1" {
+  count                   = var.ec2_detection ? 1 : 0
+  source                  = "./lambda_functions/ec2_detection"
+  lambda_log_group_prefix = var.lambda_log_group_prefix
+  stack_prefix            = local.ec2_detect_prefix
+  environment             = var.environment
+  execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
+  providers = {
+    aws = aws.ca-central-1
+  }
+}
+
+module "ec2_detection_eu_north_1" {
+  count                   = var.ec2_detection ? 1 : 0
+  source                  = "./lambda_functions/ec2_detection"
+  lambda_log_group_prefix = var.lambda_log_group_prefix
+  stack_prefix            = local.ec2_detect_prefix
+  environment             = var.environment
+  execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
+  providers = {
+    aws = aws.eu-north-1
+  }
+}
+
+module "ec2_detection_eu_west_3" {
+  count                   = var.ec2_detection ? 1 : 0
+  source                  = "./lambda_functions/ec2_detection"
+  lambda_log_group_prefix = var.lambda_log_group_prefix
+  stack_prefix            = local.ec2_detect_prefix
+  environment             = var.environment
+  execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
+  providers = {
+    aws = aws.eu-west-3
+  }
+}
+
+module "ec2_detection_eu_west_2" {
+  count                   = var.ec2_detection ? 1 : 0
+  source                  = "./lambda_functions/ec2_detection"
+  lambda_log_group_prefix = var.lambda_log_group_prefix
+  stack_prefix            = local.ec2_detect_prefix
+  environment             = var.environment
+  execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
+  providers = {
+    aws = aws.eu-west-2
+  }
+}
+
+module "ec2_detection_eu_west_1" {
+  count                   = var.ec2_detection ? 1 : 0
+  source                  = "./lambda_functions/ec2_detection"
+  lambda_log_group_prefix = var.lambda_log_group_prefix
+  stack_prefix            = local.ec2_detect_prefix
+  environment             = var.environment
+  execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
+  providers = {
+    aws = aws.eu-west-1
+  }
+}
+
+module "ec2_detection_eu_central_1" {
+  count                   = var.ec2_detection ? 1 : 0
+  source                  = "./lambda_functions/ec2_detection"
+  lambda_log_group_prefix = var.lambda_log_group_prefix
+  stack_prefix            = local.ec2_detect_prefix
+  environment             = var.environment
+  execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
+  providers = {
+    aws = aws.eu-central-1
+  }
+}
+
+module "ec2_detection_ap_south_1" {
+  count                   = var.ec2_detection ? 1 : 0
+  source                  = "./lambda_functions/ec2_detection"
+  lambda_log_group_prefix = var.lambda_log_group_prefix
+  stack_prefix            = local.ec2_detect_prefix
+  environment             = var.environment
+  execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
+  providers = {
+    aws = aws.ap-south-1
+  }
+}
+
+module "ec2_detection_ap_northeast_1" {
+  count                   = var.ec2_detection ? 1 : 0
+  source                  = "./lambda_functions/ec2_detection"
+  lambda_log_group_prefix = var.lambda_log_group_prefix
+  stack_prefix            = local.ec2_detect_prefix
+  environment             = var.environment
+  execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
+  providers = {
+    aws = aws.ap-northeast-1
+  }
+}
+
+module "ec2_detection_ap_northeast_2" {
+  count                   = var.ec2_detection ? 1 : 0
+  source                  = "./lambda_functions/ec2_detection"
+  lambda_log_group_prefix = var.lambda_log_group_prefix
+  stack_prefix            = local.ec2_detect_prefix
+  environment             = var.environment
+  execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
+  providers = {
+    aws = aws.ap-northeast-2
+  }
+}
+
+module "ec2_detection_ap_southeast_1" {
+  count                   = var.ec2_detection ? 1 : 0
+  source                  = "./lambda_functions/ec2_detection"
+  lambda_log_group_prefix = var.lambda_log_group_prefix
+  stack_prefix            = local.ec2_detect_prefix
+  environment             = var.environment
+  execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
+  providers = {
+    aws = aws.ap-southeast-1
+  }
+}
+
+module "ec2_detection_ap_southeast_2" {
+  count                   = var.ec2_detection ? 1 : 0
+  source                  = "./lambda_functions/ec2_detection"
+  lambda_log_group_prefix = var.lambda_log_group_prefix
+  stack_prefix            = local.ec2_detect_prefix
+  environment             = var.environment
+  execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
+  providers = {
+    aws = aws.ap-southeast-2
+  }
+}
+
+module "ec2_detection_sa_east_1" {
+  count                   = var.ec2_detection ? 1 : 0
+  source                  = "./lambda_functions/ec2_detection"
+  lambda_log_group_prefix = var.lambda_log_group_prefix
+  stack_prefix            = local.ec2_detect_prefix
+  environment             = var.environment
+  execution_role_arn      = aws_iam_role.ec2_detection[0].arn
+  s3_bucket               = aws_s3_bucket.ec2_detection[0].id
+  providers = {
+    aws = aws.sa-east-1
   }
 }
