@@ -1,4 +1,4 @@
-name: lucidum-deployment-seed continuous integration
+name: lucidum-deployment-seed continuous integration ec2_detection
 
 on: [ push, pull_request ]
 
