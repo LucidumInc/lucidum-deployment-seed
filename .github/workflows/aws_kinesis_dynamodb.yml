@@ -1,4 +1,4 @@
-name: lucidum-deployment-seed kinesis_dynamodb
+name: kinesis_dynamodb
 
 on: [ push, pull_request ]
 

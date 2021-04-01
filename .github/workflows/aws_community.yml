@@ -1,4 +1,4 @@
-name: lucidum-deployment-seed community
+name: community
 
 on: [ push, pull_request ]
 

@@ -1,4 +1,4 @@
-name: lucidum-deployment-seed ubuntu18
+name: ubuntu18
 
 on: [ push, pull_request ]
 

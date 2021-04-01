@@ -1,4 +1,4 @@
-name: lucidum-deployment-seed amznlinux2
+name: amznlinux2
 
 on: [ push, pull_request ]
 
