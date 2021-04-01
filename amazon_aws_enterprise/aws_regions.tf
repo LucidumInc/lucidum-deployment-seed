@@ -20,7 +20,7 @@ provider "aws" {
 
 provider "aws" {
   alias  = "ca-central-1"
-  region = "ca-central-1"	
+  region = "ca-central-1"
 }
 
 provider "aws" {
@@ -55,7 +55,7 @@ provider "aws" {
 
 provider "aws" {
   alias  = "ap-northeast-1"
-  region  = "ap-northeast-1"
+  region = "ap-northeast-1"
 }
 
 provider "aws" {

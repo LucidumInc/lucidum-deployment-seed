@@ -1,13 +1,13 @@
 # Required Variables
 
-key_name = "packer-ssh-key"
+key_name = "yourKeypair"
 # MUST CHANGE to your keypair
 
-subnet_id = "subnet-056557c3240854393"
+subnet_id = "subnet-0123456789abcdef0"
 # MUST CHANGE to your AWS subnet ID
 # (make sure the subnet is within the availability zone)
 
-vpc_id = "vpc-0bb4ff77f858113e1"
+vpc_id = "vpc-0123456789abcdef0"
 # MUST CHANGE to your AWS vpc ID
 # (make sure this is the vpc that hosts subnet)
 
@@ -22,7 +22,7 @@ instance_size = "r5.4xlarge"
 # Your EC2 instance type: change as needed
 # t3.2xlarge is recommended
 
-environment = "nando"
+environment = "prod"
 # Your AWS environment: change as needed
 
 associate_public_ip_address = false
@@ -59,4 +59,4 @@ playbook_edition = "enterprise"
 
 #kinesis_table = false
 
-ec2_detection = true
+#ec2_detection = false
