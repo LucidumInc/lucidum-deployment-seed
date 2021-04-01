@@ -10,8 +10,6 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-18.04 ]
-    env:
-      TF_VAR_playbook_edition: amznlinux2
     steps:
       - uses: actions/checkout@v2
 
@@ -27,19 +25,20 @@ jobs:
           echo "aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
           echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
 
+      - name: set amznlinux2 deploy
+        run: sed -i 's/enterprise/amznlinux2/' terraform.tfvars
+        working-directory: amazon_aws_enterprise
+
       - name: terraform amznlinux2 fmt check
         run: terraform fmt -check
-        id: enterprise-aws-fmt
         working-directory: amazon_aws_enterprise
 
       - name: terraform amznlinux2 init
         run: terraform init
-        id: enterprise-aws-init
         working-directory: amazon_aws_enterprise
 
       - name: terraform amznlinux2 plan
         run: terraform plan
-        id: enterprise-aws-plan
         working-directory: amazon_aws_enterprise
 
       - name: trigger codebuild lucidum-deployment-pipelines amznlinux2

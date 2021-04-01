@@ -6,8 +6,6 @@ jobs:
   build:
     environment: gha-ci
     runs-on: ${{ matrix.os }}
-    env:
-      TF_VAR_kinesis_table: true
     strategy:
       fail-fast: false
       matrix:
@@ -26,6 +24,10 @@ jobs:
           echo "[default]" > ~/.aws/credentials
           echo "aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
           echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+
+      - name: set kinesis_dynamodb deploy
+        run: echo "kinesis_table = true" | tee -a terraform.tfvars
+        working-directory: amazon_aws_enterprise
 
       - name: terraform enterprise aws fmt check
         run: terraform fmt -check
