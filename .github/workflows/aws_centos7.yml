@@ -26,22 +26,21 @@ jobs:
           echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
 
       - name: set centos7 deploy
-        run: sed -i 's/enterprise/centos7/' terraform.tfvars
+        run: |
+          sed -i 's/enterprise/centos7/' terraform.tfvars
+          cat terraform.tfvars
         working-directory: amazon_aws_enterprise
 
       - name: terraform enterprise aws fmt check
         run: terraform fmt -check
-        id: enterprise-aws-fmt
         working-directory: amazon_aws_enterprise
 
       - name: terraform enterprise aws init
         run: terraform init
-        id: enterprise-aws-init
         working-directory: amazon_aws_enterprise
 
       - name: terraform enterprise aws plan
         run: terraform plan
-        id: enterprise-aws-plan
         working-directory: amazon_aws_enterprise
 
       - name: trigger codebuild lucidum-deployment-pipelines centos
