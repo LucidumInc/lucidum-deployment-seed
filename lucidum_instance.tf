@@ -178,7 +178,7 @@ resource "aws_iam_role_policy" "lucidum" {
   count  = var.instance_profile_name == "" ? 1 : 0
   name   = local.lucidum_env
   role   = aws_iam_role.lucidum[0].name
-  policy = file("../x_account_assume_role/lucidum_assume_role_policy.json")
+  policy = file("../x_account_deployment/lucidum_assume_role_policy.json")
 }
 
 output "lucidum_instance_private_ip" {
