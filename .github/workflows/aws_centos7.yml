@@ -28,7 +28,7 @@ jobs:
       - name: set centos7 deploy
         run: |
           sed -i 's/enterprise/centos7/' terraform.tfvars
-          sed -i 's/v0.3.8/v1.0.0/' terraform.tfvars
+          sed -i 's/v0.3.8/v1.0.2/' terraform.tfvars
           cat terraform.tfvars
         working-directory: amazon_aws_enterprise
 
