@@ -1,4 +1,9 @@
 provider "aws" {
+  region  = var.aws_region
+  profile = var.aws_profile
+}
+
+provider "aws" {
   alias  = "us-west-1"
   region = "us-west-1"
 }

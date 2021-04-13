@@ -2,6 +2,6 @@
 .terraform.lock.hcl
 .vagrant/
 terraform.tfstate*
-x_account_assume_role_*
+x_account_deployment_*
 *.zip
 terraform.tfvars.dev

@@ -1,5 +1,10 @@
 variable "stack_name" {
   type    = string
+  default = "lucidum_x_account_deployment"
+}
+
+variable "assume_role_name" {
+  type    = string
   default = "lucidum_assume_role"
 }
 
@@ -25,4 +30,23 @@ variable "aws_profile" {
 variable "max_session_duration" {
   type    = number
   default = 43200
+}
+
+variable "environment" {
+  type    = string
+  default = "prod"
+}
+
+variable "ec2_detection" {
+  type    = bool
+  default = false
+}
+
+variable "lambda_log_group_prefix" {
+  type    = string
+  default = "/aws/lambda/"
+}
+
+variable "lucidum_s3_bucket" {
+  type    = string
 }

@@ -1,8 +1,3 @@
-provider "aws" {
-  region  = var.aws_region
-  profile = var.aws_profile
-}
-
 data "aws_iam_policy_document" "lucidum_assume_role_trust" {
   statement {
     effect = "Allow"
@@ -22,13 +17,13 @@ data "aws_iam_policy_document" "lucidum_assume_role_trust" {
 }
 
 resource "aws_iam_role" "lucidum_assume_role" {
-  name                 = var.stack_name
+  name                 = var.assume_role_name
   assume_role_policy   = data.aws_iam_policy_document.lucidum_assume_role_trust.json
   max_session_duration = var.max_session_duration
 }
 
 resource "aws_iam_role_policy" "lucidum_assume_role_trust" {
-  name_prefix  = var.stack_name
+  name_prefix  = var.assume_role_name
   role         = aws_iam_role.lucidum_assume_role.name
   policy       = file("lucidum_assume_role_policy.json")
 }

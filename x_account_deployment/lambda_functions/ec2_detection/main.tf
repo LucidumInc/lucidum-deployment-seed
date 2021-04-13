@@ -30,7 +30,7 @@ EOF
 
 resource "aws_lambda_function" "ec2_detection" {
   filename         = "ec2_detection.zip"
-  function_name    = "ec2_detection"
+  function_name    = "lucidum_ec2_detection"
   role             = var.execution_role_arn
   handler          = "exports.lambda_handler"
   source_code_hash = filebase64sha256(data.archive_file.ec2_detection.output_path)
