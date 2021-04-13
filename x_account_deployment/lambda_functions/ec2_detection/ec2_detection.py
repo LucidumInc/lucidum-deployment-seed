@@ -1,6 +1,7 @@
-import json
 import boto3
+import json
 import time
+import os
 
 
 
@@ -18,7 +19,7 @@ def lambda_handler(event, context):
 
     s3.put_object(
         Body=str(json.dumps(json_object)),
-        Bucket='lucidum-ec2-detection',
-        # /lucidum/ec2/yyyy-mm-dd/ec2<instanceId>-created.json
-        Key=f"ec2/{time.strftime('%Y%m%d')}/ec2-{str(instance_id)}-{str(state)}.json"
+        Bucket=os.environ['s3_bucket'],
+        # /lucidum/ec2/yyyy-mm-dd/<instanceId>-created.json
+        Key=f"/lucidum/ec2/{time.strftime('%Y%m%d')}/{str(instance_id)}-{str(state)}.json"
     )
