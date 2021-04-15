@@ -15,7 +15,7 @@ On-Premises users, such as VMware, OpenStack, and bare-metal servers, can use th
    We recommend the following minimum resources: `memory 128G` `cpu 16 cores` `hard drive 1T SSD`\
    Ensure the virtual machine has internet connectivity. (Verify IP addressing, routing, firewall, http-proxy, etc).
 
-2. Decrypt and set Lucidum Enterprise AWS Secrets in the appropriate boot script for your Operating System (e.g., Ubuntu, Amazon Linux, etc).  The boot scripts are located in the the `boot_scripts/` directory.  In the appropriate script for your OS, add values to these three variables at the top of the script: CUSTOMER_NAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY.  Summary:
+2. Decrypt and set Lucidum Enterprise AWS Secrets in the appropriate boot script for your Operating System (e.g., Ubuntu, CentOS, etc).  The boot scripts are located in the the `boot_scripts/` directory.  In the appropriate script for your OS, add values to these three variables at the top of the script: CUSTOMER_NAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY.  Summary:
    - Lucidum will provide you with an asc file containing the encrypted secrets
    - Use GnuPG, or any other PGP software, to decrypt
    - Set these secrets at the top of the script for your OS `boot_<yourOS>.sh`
