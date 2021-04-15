@@ -11,7 +11,7 @@
 2. Set variables in `terraform.tfvars`
    - These are your AWS account specific values, such as vpc, subnet ids, ssh key, etc.
 
-3. Set the AWS Secrets (from step 0) in the boot script `amazon_aws_enterprise/boot_ubuntu18.sh`.  NOTE: Ubuntu is the default, but you can also choose Amazon Linux.  *If you prefer Amazon Linux, instead directly edit the Amazon Linux boot script under the '`boot_scripts/boot_amznlinux2.sh`*
+3. Set the AWS Secrets (from step 0) in the boot script `amazon_aws_enterprise/boot_ubuntu18.sh`.  NOTE: Ubuntu is the default, but you can also choose Amazon Linux.  *If you prefer Amazon Linux, instead directly edit the Amazon Linux boot script at `boot_scripts/boot_amznlinux2.sh`*
    - These are the customer specific encrypted secrets we will provide you from step 0.
    - Decrypt file with GPG tools `gpg --decrypt customer.asc`
    - The file will contain three parameters to set in your boot script: CUSTOMER_NAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY.  The boot scripts already contain placeholders for the information, just set the 3 values in the variable.
