@@ -181,6 +181,10 @@ resource "aws_iam_role_policy" "lucidum" {
   policy = file("../x_account_deployment/lucidum_assume_role_policy.json")
 }
 
+output "lucidum_instance_id" {
+  value = aws_instance.lucidum.id
+}
+
 output "lucidum_instance_private_ip" {
   value = aws_instance.lucidum.private_ip
 }
