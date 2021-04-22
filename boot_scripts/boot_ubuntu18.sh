@@ -7,6 +7,12 @@ set -o errexit
 export CUSTOMER_NAME=CHANGEME_NAME
 export AWS_ACCESS_KEY_ID=CHANGEME_ID
 export AWS_SECRET_ACCESS_KEY=CHANGEME_KEY
+
+
+
+#### Do not change below this line ####
+
+
 export AWS_DEFAULT_REGION=us-west-1
 LUCIDUM_S3_BUCKET=lucidum-repository
 
