@@ -40,7 +40,7 @@ resource "aws_iam_policy" "ec2_detection" {
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ],
-      "Resource": "arn:aws:logs:*:*:*",
+      "Resource": "*",
       "Effect": "Allow"
     },
     {
@@ -50,6 +50,11 @@ resource "aws_iam_policy" "ec2_detection" {
     },
     {
       "Action": "s3:*",
+      "Resource": "arn:aws:s3:::${var.lucidum_s3_bucket}/*",
+      "Effect": "Allow"
+    },
+    {
+      "Action": "ec2:DescribeInstances",
       "Resource": "*",
       "Effect": "Allow"
     }
