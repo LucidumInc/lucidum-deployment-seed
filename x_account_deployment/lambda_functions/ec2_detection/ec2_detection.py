@@ -18,7 +18,7 @@ def lambda_handler(event, context):
     
     s3.put_object(
         Body=json.dumps(instance, default=datetime_handler),
-        Bucket=os.environ['s3_bucket'],
+        Bucket=os.environ['s3_bucket'], # is os.environ with respect to where this lambda runs? 
         # /lucidum/ec2/yyyy-mm-dd/ec2<instanceId>-created.json
         Key=f"ec2/{time.strftime('%Y%m%d')}/ec2-{str(instance_id)}-{str(state)}.json"
     )
