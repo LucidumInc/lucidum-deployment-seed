@@ -2,7 +2,6 @@ import json
 import boto3
 import time
 import datetime
-import time
 import os
 
 def lambda_handler(event, context):
@@ -13,6 +12,7 @@ def lambda_handler(event, context):
     ec2_client = boto3.client('ec2')
     instance_info = ec2_client.describe_instances(InstanceIds=[instance_id])
     instance = instance_info['Reservations'][0]['Instances'][0]
+    instance['lambda_ts'] = int(time.time())
     
     s3 = boto3.client('s3')
     
