@@ -32,7 +32,7 @@ resource "aws_lambda_function" "ec2_detection" {
   filename         = "ec2_detection.zip"
   function_name    = "lucidum_ec2_detection"
   role             = var.execution_role_arn
-  handler          = "exports.lambda_handler"
+  handler          = "ec2_detection.lambda_handler"
   source_code_hash = filebase64sha256(data.archive_file.ec2_detection.output_path)
 
   runtime = "python3.8"
