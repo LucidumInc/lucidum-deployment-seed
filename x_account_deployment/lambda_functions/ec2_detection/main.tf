@@ -60,15 +60,15 @@ data "archive_file" "ec2_detection" {
 }
 
 resource "aws_cloudwatch_event_target" "event_rule_target_with_lambda" {
-  rule = "${aws_cloudwatch_event_rule.ec2_detection.name}"
+  rule = aws_cloudwatch_event_rule.ec2_detection.name
   target_id = "ec2_detection"
-  arn = "${aws_lambda_function.ec2_detection.arn}"
+  arn = aws_lambda_function.ec2_detection.arn
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch_to_call_ec2_detection" {
   statement_id = "AllowExecutionFromCloudWatch"
   action = "lambda:InvokeFunction"
-  function_name = "${aws_lambda_function.ec2_detection.function_name}"
+  function_name = aws_lambda_function.ec2_detection.function_name
   principal = "events.amazonaws.com"
-  source_arn = "${aws_cloudwatch_event_rule.ec2_detection.arn}"
+  source_arn = aws_cloudwatch_event_rule.ec2_detection.arn
 }
