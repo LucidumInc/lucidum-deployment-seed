@@ -53,6 +53,7 @@
                 "securityhub:Describe*",
                 "securityhub:Get*",
                 "securityhub:List*",
+                "ssm:Describe*",
                 "ssm:Get*",
                 "sts:Get*",
                 "sts:AssumeRole",
