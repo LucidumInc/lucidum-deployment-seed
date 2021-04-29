@@ -22,7 +22,7 @@
                 "ecs:List*",
                 "eks:Describe*",
                 "eks:List*",
-                "elasticache:Describe*"
+                "elasticache:Describe*",
                 "elasticloadbalancing:Describe*",
                 "guardduty:Get*",
                 "guardduty:List*",
