@@ -58,7 +58,8 @@
                 "ssm:Get*",
                 "sts:Get*",
                 "sts:AssumeRole",
-                "tag:Get*"
+                "tag:Get*",
+                "workspaces:Describe*"
     ],
     "Resource": "*"
   }
