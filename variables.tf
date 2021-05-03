@@ -49,6 +49,16 @@ variable "playbook_edition" {
 
 # optional overrides
 
+variable "volume_size" {
+  type    = number
+  default = 1000
+}
+
+variable "volume_type" {
+  type    = string
+  default = "gp2"
+}
+
 variable "security_group_id" {
   type    = string
   default = ""

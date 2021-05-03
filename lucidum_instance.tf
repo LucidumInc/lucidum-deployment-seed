@@ -119,7 +119,8 @@ resource "aws_instance" "lucidum" {
   user_data                   = file("${abspath(path.root)}/../boot_scripts/boot_${local.lucidum_edition}.sh")
 
   root_block_device {
-    volume_size = 1000
+    volume_size = var.volume_size
+    volume_type = var.volume_type
   }
 
   tags = {
