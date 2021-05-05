@@ -11,6 +11,7 @@ locals {
   lucidum_version    = "lucidum-${var.playbook_edition}-${var.playbook_version}"
   lucidum_deployment = "lucidum-${var.playbook_edition}-${var.playbook_version}-${var.environment}"
   lucidum_env        = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}-${var.environment}"
+  tags               = merge({Name=local.lucidum_env}, var.tags)
 }
 
 data "aws_ami" "lucidum_ami" {
@@ -42,9 +43,7 @@ resource "aws_security_group" "lucidum" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = local.lucidum_env
-  }
+  tags = local.tags
 }
 
 resource "aws_security_group_rule" "allow_ssh" {
@@ -192,4 +191,8 @@ output "lucidum_instance_private_ip" {
 
 output "lucidum_instance_public_ip" {
   value = aws_instance.lucidum.public_ip
+}
+
+output "instance_tags" {
+  value = local.tags
 }

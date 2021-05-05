@@ -60,3 +60,5 @@ playbook_edition = "enterprise"
 #kinesis_table = false
 
 #ec2_detection = false
+
+#tags = {}

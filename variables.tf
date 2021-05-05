@@ -49,6 +49,11 @@ variable "playbook_edition" {
 
 # optional overrides
 
+variable "tags" {
+  type    = map
+  default = {Vendor="Lucidum"}
+}
+
 variable "volume_size" {
   type    = number
   default = 1000
