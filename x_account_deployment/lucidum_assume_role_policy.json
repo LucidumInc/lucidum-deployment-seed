@@ -18,6 +18,7 @@
                 "dynamodb:Scan",
                 "ec2:Describe*",
                 "ec2:Get*",
+                "ecr:Batch*",
                 "ecr:Describe*",
                 "ecr:Get*",
                 "ecr:List*",
