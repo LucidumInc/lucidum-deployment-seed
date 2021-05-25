@@ -76,6 +76,16 @@ resource "aws_security_group_rule" "allow_airflow" {
   cidr_blocks       = var.trusted_cidrs
 }
 
+resource "aws_security_group_rule" "allow_update_manager_api" {
+  count             = var.security_group_id == "" && var.playbook_edition != "community" ? 1 : 0
+  type              = "ingress"
+  to_port           = 8000
+  from_port         = 8000
+  protocol          = "tcp"
+  security_group_id = aws_security_group.lucidum[0].id
+  cidr_blocks       = var.trusted_cidrs
+}
+
 resource "aws_security_group_rule" "allow_icmp" {
   count             = var.security_group_id == "" ? 1 : 0
   type              = "ingress"
