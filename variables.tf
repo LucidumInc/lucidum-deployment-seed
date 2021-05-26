@@ -20,14 +20,6 @@ variable "associate_public_ip_address" {
   type = bool
 }
 
-variable "subnet_id" {
-  type = string
-}
-
-variable "vpc_id" {
-  type = string
-}
-
 variable "key_name" {
   type    = string
   default = ""
@@ -36,6 +28,11 @@ variable "key_name" {
 variable "trusted_cidrs" {
   type    = list(any)
   default = ["10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12"]
+
+}
+
+variable "product_version" {
+  type = string
 }
 
 variable "playbook_version" {
@@ -66,6 +63,16 @@ variable "volume_type" {
 
 variable "security_group_id" {
   type    = string
+  default = ""
+}
+
+variable "subnet_id" {
+  type = string
+  default = ""
+}
+
+variable "vpc_id" {
+  type = string
   default = ""
 }
 
@@ -114,6 +121,10 @@ variable "ec2_detection" {
   default = false
 }
 
+variable "lucidum_cidr" {
+  type    = string
+  default = "10.99.99.0/24"
+}
 
 # assume role vars
 

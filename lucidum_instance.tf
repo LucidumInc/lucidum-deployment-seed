@@ -4,14 +4,77 @@ provider "aws" {
 }
 
 locals {
+  vpc_id             = var.vpc_id != "" ? var.vpc_id : aws_vpc.lucidum[0].id
+  subnet_id          = var.subnet_id != "" ? var.subnet_id : aws_subnet.lucidum[0].id
   secgroup_id        = var.security_group_id != "" ? var.security_group_id : aws_security_group.lucidum[0].id
   profile_name       = var.instance_profile_name != "" ? var.instance_profile_name : aws_iam_instance_profile.lucidum[0].name
   lucidum_edition    = var.playbook_edition == "enterprise" ? "ubuntu18" : var.playbook_edition
-  lucidum_prefix     = "lucidum-${local.lucidum_edition}-edition-${var.playbook_version}"
-  lucidum_version    = "lucidum-${var.playbook_edition}-${var.playbook_version}"
-  lucidum_deployment = "lucidum-${var.playbook_edition}-${var.playbook_version}-${var.environment}"
-  lucidum_env        = "lucidum-${var.playbook_edition}-edition-${var.playbook_version}-${var.environment}"
-  tags               = merge({ Name = local.lucidum_env }, var.tags)
+  lucidum_ami        = "lucidum-${local.lucidum_edition}-edition-${var.playbook_version}"
+  lucidum_version    = "lucidum-${var.playbook_edition}-${var.playbook_version}-${var.product_version}"
+  lucidum_deployment = "lucidum-${var.playbook_edition}-${var.playbook_version}-${var.product_version}-${var.environment}"
+  tags               = merge({ Name = local.lucidum_deployment }, var.tags)
+}
+
+
+resource "aws_vpc" "lucidum" {
+  count                            = var.vpc_id == "" ? 1 : 0
+  cidr_block                       = var.lucidum_cidr
+  instance_tenancy                 = "default"
+  enable_dns_support               = true
+  enable_dns_hostnames             = false
+  enable_classiclink               = false
+  enable_classiclink_dns_support   = false
+  assign_generated_ipv6_cidr_block = false
+
+  tags = {
+    Name        = local.lucidum_version
+    Environment = var.environment
+  }
+}
+
+resource "aws_subnet" "lucidum" {
+  count                           = var.subnet_id == "" ? 1 : 0
+  vpc_id                          = aws_vpc.lucidum[0].id
+  cidr_block                      = var.lucidum_cidr
+  availability_zone               = var.availability_zone
+  map_public_ip_on_launch         = true
+  assign_ipv6_address_on_creation = false
+
+  tags = {
+    Name        = local.lucidum_version
+    Environment = var.environment
+  }
+}
+
+resource "aws_internet_gateway" "lucidum" {
+  count  = var.vpc_id == "" ? 1 : 0
+  vpc_id = aws_vpc.lucidum[0].id
+
+  tags = {
+    Name        = local.lucidum_version
+    Environment = var.environment
+  }
+}
+
+resource "aws_route_table" "lucidum" {
+  count  = var.vpc_id == "" ? 1 : 0
+  vpc_id = aws_vpc.lucidum[0].id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.lucidum[0].id
+  }
+
+  tags = {
+    Name        = local.lucidum_version
+    Environment = var.environment
+  }
+}
+
+resource "aws_route_table_association" "lucidum"{
+  count  = var.subnet_id == "" ? 1 : 0
+  subnet_id = aws_subnet.lucidum[0].id
+  route_table_id = aws_route_table.lucidum[0].id
 }
 
 data "aws_ami" "lucidum_ami" {
@@ -19,7 +82,7 @@ data "aws_ami" "lucidum_ami" {
 
   filter {
     name   = "name"
-    values = ["${local.lucidum_prefix}*"]
+    values = ["${local.lucidum_ami}*"]
   }
 
   filter {
@@ -32,9 +95,9 @@ data "aws_ami" "lucidum_ami" {
 
 resource "aws_security_group" "lucidum" {
   count       = var.security_group_id == "" ? 1 : 0
-  name        = local.lucidum_env
-  description = local.lucidum_env
-  vpc_id      = var.vpc_id
+  name        = local.lucidum_deployment
+  description = local.lucidum_deployment
+  vpc_id      = local.vpc_id
 
   egress {
     from_port   = 0
@@ -120,9 +183,9 @@ resource "aws_instance" "lucidum" {
   ami                         = var.lucidum_ami_id == "" ? data.aws_ami.lucidum_ami.id : var.lucidum_ami_id
   instance_type               = var.instance_size
   key_name                    = var.key_name
-  subnet_id                   = var.subnet_id
+  subnet_id                   = local.subnet_id
   associate_public_ip_address = var.associate_public_ip_address
-  vpc_security_group_ids      = [local.secgroup_id]
+  vpc_security_group_ids      = [ local.secgroup_id ]
   iam_instance_profile        = local.profile_name
   availability_zone           = var.availability_zone
   user_data                   = file("${abspath(path.root)}/../boot_scripts/boot_${local.lucidum_edition}.sh")
@@ -133,7 +196,7 @@ resource "aws_instance" "lucidum" {
   }
 
   tags = {
-    Name = local.lucidum_env
+    Name = local.lucidum_deployment
   }
 }
 
@@ -156,22 +219,22 @@ resource "aws_ebs_volume" "lucidum_data" {
   size              = 50
   availability_zone = var.availability_zone
   tags = {
-    Name = "${local.lucidum_env}_data"
+    Name = "${local.lucidum_deployment}_data"
   }
 }
 
 resource "aws_iam_instance_profile" "lucidum" {
   count = var.instance_profile_name == "" ? 1 : 0
-  name  = local.lucidum_env
+  name  = local.lucidum_deployment
   role  = aws_iam_role.lucidum[0].name
 }
 
 resource "aws_iam_role" "lucidum" {
   count              = var.instance_profile_name == "" ? 1 : 0
-  name               = local.lucidum_env
+  name               = local.lucidum_deployment
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.lucidum_assume_role.json
-  tags               = { Name = local.lucidum_env }
+  tags               = { Name = local.lucidum_deployment }
 }
 
 data "aws_iam_policy_document" "lucidum_assume_role" {
@@ -186,7 +249,7 @@ data "aws_iam_policy_document" "lucidum_assume_role" {
 
 resource "aws_iam_role_policy" "lucidum" {
   count  = var.instance_profile_name == "" ? 1 : 0
-  name   = local.lucidum_env
+  name   = local.lucidum_deployment
   role   = aws_iam_role.lucidum[0].name
   policy = file("../x_account_deployment/lucidum_assume_role_policy.json")
 }
