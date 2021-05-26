@@ -91,6 +91,7 @@ resource "azurerm_network_security_group" "lucidum_deploy" {
   name                = var.stack_name
   location            = azurerm_resource_group.lucidum_deploy.location
   resource_group_name = azurerm_resource_group.lucidum_deploy.name
+
   security_rule {
     access                     = "Allow"
     direction                  = "Inbound"
@@ -100,6 +101,42 @@ resource "azurerm_network_security_group" "lucidum_deploy" {
     source_port_range          = "*"
     source_address_prefixes    = var.trusted_locations
     destination_port_range     = "22"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    access                     = "Allow"
+    direction                  = "Inbound"
+    name                       = "${var.stack_name}_allow_ui_access"
+    priority                   = 100
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    source_address_prefixes    = var.trusted_locations
+    destination_port_range     = "443"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    access                     = "Allow"
+    direction                  = "Inbound"
+    name                       = "${var.stack_name}_allow_api_access"
+    priority                   = 100
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    source_address_prefixes    = var.trusted_locations
+    destination_port_range     = "8000"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    access                     = "Allow"
+    direction                  = "Inbound"
+    name                       = "${var.stack_name}_allow_airflow_access"
+    priority                   = 100
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    source_address_prefixes    = var.trusted_locations
+    destination_port_range     = "9080"
     destination_address_prefix = "*"
   }
 }
