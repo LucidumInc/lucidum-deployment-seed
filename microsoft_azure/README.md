@@ -23,6 +23,7 @@ To bring up the Lucidum stack on Microsoft Azure:
      - Your lucidum-instance-public-IP will display at end of Terraform run (use this for step #4)
 
   5. Connect to instance `ssh -i /path/to/private_key ubuntu@[lucidum-instance-public-IP]`
+     - This is the private key, matching the public key specified (step #1)
 
   6. Update secrets in install script `/var/lib/cloud/instance/scripts/part-001`
      - These are the customer specific encrypted secrets we will provide you
