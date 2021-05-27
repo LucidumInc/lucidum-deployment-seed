@@ -13,8 +13,11 @@ aws_region = "us-west-1"
 source_ami_account_number = "308025194586"
 # Lucidum AMI account: Don't change this line
 
-playbook_version = "v0.1.21"
+product_version = "v2.5.0"
 # Lucidum Product Version: change when new version is released
+ 
+playbook_version = "v0.1.21"
+# Lucidum Playbook Version: change when new version is released
 
 playbook_edition = "community"
 # Lucidum Product Edition: Don't change this line
