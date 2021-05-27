@@ -4,6 +4,7 @@ provider "aws" {
 }
 
 locals {
+  elastic_ip         = var.associate_public_ip_address ? aws_eip.lucidum[0].public_ip : "none"
   vpc_id             = var.vpc_id != "" ? var.vpc_id : aws_vpc.lucidum[0].id
   subnet_id          = var.subnet_id != "" ? var.subnet_id : aws_subnet.lucidum[0].id
   secgroup_id        = var.security_group_id != "" ? var.security_group_id : aws_security_group.lucidum[0].id
@@ -265,7 +266,7 @@ output "lucidum_instance_public_ip" {
 
 
 output "lucidum_instance_elastic_ip" {
-  value = aws_eip.lucidum[0].public_ip
+  value = local.elastic_ip
 }
 
 
