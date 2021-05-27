@@ -43,6 +43,7 @@ jobs:
       - name: terraform enterprise aws plan
         run: terraform plan
         working-directory: amazon_aws_enterprise
+        if: false  # disable centos
 
       - name: trigger codebuild lucidum-deployment-pipelines centos
         run: echo trigger codebuild lucidum-deployment-pipelines centos

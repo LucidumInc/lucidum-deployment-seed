@@ -39,6 +39,7 @@ jobs:
         run: terraform plan
         id: community-plan
         working-directory: amazon_aws_community
+        if: false  # disable community
 
       - name: trigger codebuild lucidum-deployment-pipelines community
         run: echo trigger codebuild lucidum-deployment-pipelines community

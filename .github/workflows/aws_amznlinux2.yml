@@ -40,6 +40,7 @@ jobs:
       - name: terraform amznlinux2 plan
         run: terraform plan
         working-directory: amazon_aws_enterprise
+        if: false  # disable amznlinux2
 
       - name: trigger codebuild lucidum-deployment-pipelines amznlinux2
         run: echo trigger codebuild lucidum-deployment-pipelines amznlinux2
