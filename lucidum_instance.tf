@@ -12,7 +12,9 @@ locals {
   lucidum_ami        = "lucidum-${local.lucidum_edition}-edition-${var.playbook_version}"
   lucidum_version    = "lucidum-${var.playbook_edition}-${var.playbook_version}-${var.product_version}"
   lucidum_deployment = "lucidum-${var.playbook_edition}-${var.playbook_version}-${var.product_version}-${var.environment}"
-  tags               = merge({ Name = local.lucidum_deployment }, var.tags)
+  tags               = merge({ Name = local.lucidum_deployment,
+                               Edition = local.lucidum_edition,
+                               Environment = var.environment }, var.tags)
 }
 
 
@@ -25,11 +27,7 @@ resource "aws_vpc" "lucidum" {
   enable_classiclink               = false
   enable_classiclink_dns_support   = false
   assign_generated_ipv6_cidr_block = false
-
-  tags = {
-    Name        = local.lucidum_version
-    Environment = var.environment
-  }
+  tags                             = local.tags
 }
 
 resource "aws_subnet" "lucidum" {
@@ -39,35 +37,31 @@ resource "aws_subnet" "lucidum" {
   availability_zone               = var.availability_zone
   map_public_ip_on_launch         = true
   assign_ipv6_address_on_creation = false
-
-  tags = {
-    Name        = local.lucidum_version
-    Environment = var.environment
-  }
+  tags                            = local.tags
 }
 
 resource "aws_internet_gateway" "lucidum" {
   count  = var.vpc_id == "" ? 1 : 0
   vpc_id = aws_vpc.lucidum[0].id
+  tags   = local.tags
+}
 
-  tags = {
-    Name        = local.lucidum_version
-    Environment = var.environment
-  }
+resource "aws_eip" "lucidum" {
+  count      = var.associate_public_ip_address == true ? 1 : 0
+  vpc        = true
+  instance   = aws_instance.lucidum.id
+  depends_on = [ aws_internet_gateway.lucidum ]
+  tags       = local.tags
 }
 
 resource "aws_route_table" "lucidum" {
   count  = var.vpc_id == "" ? 1 : 0
   vpc_id = aws_vpc.lucidum[0].id
+  tags   = local.tags
 
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.lucidum[0].id
-  }
-
-  tags = {
-    Name        = local.lucidum_version
-    Environment = var.environment
   }
 }
 
@@ -184,19 +178,17 @@ resource "aws_instance" "lucidum" {
   instance_type               = var.instance_size
   key_name                    = var.key_name
   subnet_id                   = local.subnet_id
-  associate_public_ip_address = var.associate_public_ip_address
+  associate_public_ip_address = false
   vpc_security_group_ids      = [ local.secgroup_id ]
   iam_instance_profile        = local.profile_name
   availability_zone           = var.availability_zone
   user_data                   = file("${abspath(path.root)}/../boot_scripts/boot_${local.lucidum_edition}.sh")
+  tags                        = local.tags
 
   root_block_device {
     volume_size = var.volume_size
     volume_type = var.volume_type
-  }
-
-  tags = {
-    Name = local.lucidum_deployment
+    tags        = local.tags
   }
 }
 
@@ -218,9 +210,7 @@ resource "aws_ebs_volume" "lucidum_data" {
   count             = var.data_ebs_volume ? 1 : 0
   size              = 50
   availability_zone = var.availability_zone
-  tags = {
-    Name = "${local.lucidum_deployment}_data"
-  }
+  tags              = local.tags
 }
 
 resource "aws_iam_instance_profile" "lucidum" {
@@ -234,7 +224,7 @@ resource "aws_iam_role" "lucidum" {
   name               = local.lucidum_deployment
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.lucidum_assume_role.json
-  tags               = { Name = local.lucidum_deployment }
+  tags               = local.tags
 }
 
 data "aws_iam_policy_document" "lucidum_assume_role" {
@@ -254,17 +244,26 @@ resource "aws_iam_role_policy" "lucidum" {
   policy = file("../x_account_deployment/lucidum_assume_role_policy.json")
 }
 
+
 output "lucidum_instance_id" {
   value = aws_instance.lucidum.id
 }
+
 
 output "lucidum_instance_private_ip" {
   value = aws_instance.lucidum.private_ip
 }
 
+
 output "lucidum_instance_public_ip" {
   value = aws_instance.lucidum.public_ip
 }
+
+
+output "lucidum_instance_elastic_ip" {
+  value = aws_eip.lucidum[0].public_ip
+}
+
 
 output "instance_tags" {
   value = local.tags
