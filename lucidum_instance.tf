@@ -12,9 +12,13 @@ locals {
   lucidum_ami        = "lucidum-${local.lucidum_edition}-edition-${var.playbook_version}"
   lucidum_version    = "lucidum-${var.playbook_edition}-${var.playbook_version}-${var.product_version}"
   lucidum_deployment = "lucidum-${var.playbook_edition}-${var.playbook_version}-${var.product_version}-${var.environment}"
-  tags               = merge({ Name = local.lucidum_deployment,
-                               Edition = local.lucidum_edition,
-                               Environment = var.environment }, var.tags)
+  tags = merge({
+    Name             = local.lucidum_deployment,
+    Edition          = local.lucidum_edition,
+    Environment      = var.environment,
+    Playbook_Version = var.playbook_version,
+    Product_Version  = var.product_version
+  }, var.tags)
 }
 
 
@@ -50,7 +54,7 @@ resource "aws_eip" "lucidum" {
   count      = var.associate_public_ip_address == true ? 1 : 0
   vpc        = true
   instance   = aws_instance.lucidum.id
-  depends_on = [ aws_internet_gateway.lucidum ]
+  depends_on = [aws_internet_gateway.lucidum]
   tags       = local.tags
 }
 
@@ -65,9 +69,9 @@ resource "aws_route_table" "lucidum" {
   }
 }
 
-resource "aws_route_table_association" "lucidum"{
-  count  = var.subnet_id == "" ? 1 : 0
-  subnet_id = aws_subnet.lucidum[0].id
+resource "aws_route_table_association" "lucidum" {
+  count          = var.subnet_id == "" ? 1 : 0
+  subnet_id      = aws_subnet.lucidum[0].id
   route_table_id = aws_route_table.lucidum[0].id
 }
 
@@ -179,7 +183,7 @@ resource "aws_instance" "lucidum" {
   key_name                    = var.key_name
   subnet_id                   = local.subnet_id
   associate_public_ip_address = false
-  vpc_security_group_ids      = [ local.secgroup_id ]
+  vpc_security_group_ids      = [local.secgroup_id]
   iam_instance_profile        = local.profile_name
   availability_zone           = var.availability_zone
   user_data                   = file("${abspath(path.root)}/../boot_scripts/boot_${local.lucidum_edition}.sh")

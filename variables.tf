@@ -67,12 +67,12 @@ variable "security_group_id" {
 }
 
 variable "subnet_id" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "vpc_id" {
-  type = string
+  type    = string
   default = ""
 }
 
