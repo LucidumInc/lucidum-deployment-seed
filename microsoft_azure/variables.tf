@@ -27,3 +27,8 @@ variable "instance_user" {
   type    = string
   default = "ubuntu"
 }
+
+variable "volume_size" {
+  type    = number
+  default = 1000
+}

@@ -5,3 +5,4 @@ terraform.tfstate*
 *.zip
 terraform.tfvars.dev
 .idea
+x_account_deployment_*

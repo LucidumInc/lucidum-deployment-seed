@@ -6,12 +6,18 @@ provider "azurerm" {
 
 locals {
   stack_name_stripped = replace(var.stack_name, "_", "0")
+  tags = {
+    name        = var.stack_name
+    environment = var.environment
+    vendor      = "lucidum"
+  }
 }
 
 
 resource "azurerm_resource_group" "lucidum_deploy" {
   name     = var.stack_name
   location = var.microsoft_location
+  tags     = local.tags
 }
 
 
@@ -20,6 +26,7 @@ resource "azurerm_virtual_network" "lucidum_deploy" {
   resource_group_name = azurerm_resource_group.lucidum_deploy.name
   location            = azurerm_resource_group.lucidum_deploy.location
   address_space       = [var.lucidum_cidr]
+  tags                = local.tags
 }
 
 
@@ -36,10 +43,7 @@ resource "azurerm_public_ip" "lucidum_deploy" {
   resource_group_name = azurerm_resource_group.lucidum_deploy.name
   location            = azurerm_resource_group.lucidum_deploy.location
   allocation_method   = "Static"
-
-  tags = {
-    environment = var.environment
-  }
+  tags                = local.tags
 }
 
 
@@ -47,6 +51,7 @@ resource "azurerm_network_interface" "lucidum_deploy" {
   name                = var.stack_name
   resource_group_name = azurerm_resource_group.lucidum_deploy.name
   location            = azurerm_resource_group.lucidum_deploy.location
+  tags                = local.tags
 
   ip_configuration {
     name                          = var.stack_name
@@ -66,6 +71,7 @@ resource "azurerm_linux_virtual_machine" "lucidum_deploy" {
   admin_username        = var.instance_user
   network_interface_ids = [azurerm_network_interface.lucidum_deploy.id]
   custom_data           = base64encode(file("${abspath(path.root)}/../boot_scripts/boot_ubuntu18.sh"))
+  tags                  = local.tags
 
   admin_ssh_key {
     username   = var.instance_user
@@ -82,7 +88,7 @@ resource "azurerm_linux_virtual_machine" "lucidum_deploy" {
   os_disk {
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
-    disk_size_gb         = 1000
+    disk_size_gb         = var.volume_size
   }
 }
 
@@ -91,6 +97,7 @@ resource "azurerm_network_security_group" "lucidum_deploy" {
   name                = var.stack_name
   location            = azurerm_resource_group.lucidum_deploy.location
   resource_group_name = azurerm_resource_group.lucidum_deploy.name
+  tags                = local.tags
 
   security_rule {
     access                     = "Allow"
@@ -108,7 +115,7 @@ resource "azurerm_network_security_group" "lucidum_deploy" {
     access                     = "Allow"
     direction                  = "Inbound"
     name                       = "${var.stack_name}_allow_ui_access"
-    priority                   = 100
+    priority                   = 101
     protocol                   = "Tcp"
     source_port_range          = "*"
     source_address_prefixes    = var.trusted_locations
@@ -120,7 +127,7 @@ resource "azurerm_network_security_group" "lucidum_deploy" {
     access                     = "Allow"
     direction                  = "Inbound"
     name                       = "${var.stack_name}_allow_api_access"
-    priority                   = 100
+    priority                   = 102
     protocol                   = "Tcp"
     source_port_range          = "*"
     source_address_prefixes    = var.trusted_locations
@@ -132,11 +139,25 @@ resource "azurerm_network_security_group" "lucidum_deploy" {
     access                     = "Allow"
     direction                  = "Inbound"
     name                       = "${var.stack_name}_allow_airflow_access"
-    priority                   = 100
+    description                = "${var.stack_name}_allow_airflow_access"
+    priority                   = 103
     protocol                   = "Tcp"
     source_port_range          = "*"
     source_address_prefixes    = var.trusted_locations
     destination_port_range     = "9080"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    access                     = "Allow"
+    direction                  = "Inbound"
+    name                       = "${var.stack_name}_allow_mongo_access"
+    description                = "${var.stack_name}_allow_mongo_access"
+    priority                   = 104
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    source_address_prefixes    = var.trusted_locations
+    destination_port_range     = "27017"
     destination_address_prefix = "*"
   }
 }
