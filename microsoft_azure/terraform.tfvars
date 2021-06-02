@@ -12,4 +12,4 @@ trusted_locations = [
   "73.63.254.22/32"
 ]
 
-instance_size = "Standard_D16_v5"
+instance_size = "Standard_D32_v4"
