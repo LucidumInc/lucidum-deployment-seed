@@ -34,7 +34,7 @@ trusted_cidrs = [
 source_ami_account_number = "308025194586"
 # Lucidum AMI account: Don't change this line
 
-playbook_version = "v1.0.25"
+playbook_version = "v1.0.27"
 # Lucidum Playbook Version: change when new version is released
 
 product_version = "v2.5.0"
