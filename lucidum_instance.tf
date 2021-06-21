@@ -109,7 +109,7 @@ resource "aws_security_group" "lucidum" {
 }
 
 resource "aws_security_group_rule" "allow_ssh" {
-  count             = var.security_group_id == "" && var.playbook_edition != "community" ? 1 : 0
+  count             = var.security_group_id == "" ? 1 : 0
   type              = "ingress"
   to_port           = 22
   from_port         = 22
