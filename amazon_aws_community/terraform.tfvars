@@ -16,7 +16,7 @@ source_ami_account_number = "308025194586"
 product_version = "v2.5.0"
 # Lucidum Product Version: change when new version is released
 
-playbook_version = "master"
+playbook_version = "v1.0.29"
 # Lucidum Playbook Version: change when new version is released
 
 playbook_edition = "community"
