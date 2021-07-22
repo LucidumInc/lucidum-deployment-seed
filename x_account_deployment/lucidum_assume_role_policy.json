@@ -10,6 +10,8 @@
                 "cloudwatch:Describe*",
                 "cloudwatch:Get*",
                 "cloudwatch:List*",
+                "codecommit:List*",
+                "codecommit:Get*",
                 "config:Describe*",
                 "config:Get*",
                 "config:List*",
